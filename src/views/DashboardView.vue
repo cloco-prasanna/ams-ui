@@ -10,10 +10,15 @@
   };
 </script>
 
+<script setup lang="ts">
+  const loggedInUser = localStorage.getItem("email");
+</script>
+
 <template>
   <Header />
 
   <div class="p-10">
+    <h1 class="mb-4">Welcome, {{ loggedInUser }}</h1>
     <div class="flex gap-4 items-start">
       <div class="min-w-[200px] border">
         <Sidenav />

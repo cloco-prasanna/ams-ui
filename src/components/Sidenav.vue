@@ -24,21 +24,23 @@
 
 <template>
   <nav class="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
-    <Button
+    <RouterLink
       v-for="item in sidebarNavItems"
       :key="item.title"
-      as="a"
-      :href="item.href"
-      variant="ghost"
-      :class="
-        cn(
-          'w-full text-left justify-start',
-          $route.currentRoute.value.path === `${item.href}` &&
-            'bg-muted hover:bg-muted'
-        )
-      "
+      :to="item.href"
     >
-      {{ item.title }}
-    </Button>
+      <Button
+        variant="ghost"
+        :class="
+          cn(
+            'w-full text-left justify-start',
+            $route.currentRoute.value.path === `${item.href}` &&
+              'bg-muted hover:bg-muted'
+          )
+        "
+      >
+        {{ item.title }}
+      </Button>
+    </RouterLink>
   </nav>
 </template>

@@ -26,7 +26,6 @@
           <TableHead>Email</TableHead>
           <TableHead>Gender</TableHead>
           <TableHead>Address</TableHead>
-          <TableHead>Phone</TableHead>
           <TableHead>Dob</TableHead>
           <TableHead class="text-right"> Actions </TableHead>
         </TableRow>
