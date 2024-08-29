@@ -1,7 +1,9 @@
 <script>
+  import Register from "@/components/Register.vue";
   import Header from "@/components/Header.vue";
   export default {
     components: {
+      Register,
       Header,
     },
   };
@@ -9,4 +11,5 @@
 
 <template>
   <Header />
+  <Register />
 </template>
