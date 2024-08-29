@@ -1,9 +1,8 @@
 <script setup lang="ts">
   import * as z from "zod";
-  import axios from "axios";
   import { Button } from "@/components/ui/button";
   import { AutoForm } from "@/components/ui/auto-form";
-  import { API_URL } from "@/lib/utils";
+  import { apiCall } from "@/lib/utils";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import { useMutation } from "@tanstack/vue-query";
@@ -27,7 +26,7 @@
   const router = useRouter();
 
   const loginMn = useMutation({
-    mutationFn: (input: any) => axios.post(`${API_URL}/tokens`, input),
+    mutationFn: (input: any) => apiCall("post", "/tokens", input),
     onSuccess: (res) => {
       toast.success("Logged In successfully!");
       localStorage.setItem("token", res.data.token);

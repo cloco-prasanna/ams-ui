@@ -10,9 +10,23 @@
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TUser } from "@/type";
   import { Button } from "../ui/button";
+  import { useMutation, useQueryClient } from "@tanstack/vue-query";
+  import { apiCall } from "@/lib/utils";
+
   const props = defineProps<{
     users?: TUser[];
   }>();
+  const queryClient = useQueryClient();
+  const deleteUserMn = useMutation({
+    mutationFn: (id: number) => apiCall("delete", `/users/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getUsers"] });
+    },
+  });
+
+  const deleteUser = (id: number) => {
+    deleteUserMn.mutate(id);
+  };
 </script>
 
 <template>
@@ -47,7 +61,11 @@
             <Button variant="outline" class="py-1 px-2">
               <PenBoxIcon class="h-4 w-4"
             /></Button>
-            <Button variant="outline" class="py-1 px-2">
+            <Button
+              variant="outline"
+              class="py-1 px-2"
+              @click="deleteUser(user.id)"
+            >
               <Trash2Icon class="h-4 w-4"
             /></Button>
           </TableCell>
