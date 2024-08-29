@@ -1,3 +1,12 @@
+<script>
+  import Header from "../components/Header.vue";
+  export default {
+    components: {
+      Header,
+    },
+  };
+</script>
+
 <template>
-  <h1>Home</h1>
+  <Header />
 </template>
