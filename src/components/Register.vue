@@ -6,6 +6,7 @@
   import { API_URL } from "@/lib/utils";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
+  import { useMutation } from "@tanstack/vue-query";
 
   const schema = z.object({
     first_name: z
@@ -60,34 +61,24 @@
 
   const router = useRouter();
 
-  async function onSubmit(values: Record<string, any>) {
-    try {
-      const res = await axios.post(
-        `${API_URL}/users`,
-        {
-          user: {
-            ...values,
-            dob: values.birthday,
-          },
-        },
-        {}
-      );
-      if (res.status == 201) {
-        toast.success("Registration successful!");
-        router.push("/");
-      }
-    } catch (error: any) {
+  const registerMn = useMutation({
+    mutationFn: (input: any) => axios.post(`${API_URL}/users`, input),
+    onSuccess: () => {
+      toast.success("Registration successful!");
+      router.push("/");
+    },
+    onError: (error: any) => {
       toast.error(error.message);
-    }
+    },
+  });
 
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: h(
-    //     "pre",
-    //     { class: "mt-2 w-[340px] rounded-md bg-slate-950 p-4" },
-    //     h("code", { class: "text-white" }, JSON.stringify(values, null, 2))
-    //   ),
-    // });
+  async function onSubmit(values: Record<string, any>) {
+    registerMn.mutate({
+      user: {
+        ...values,
+        dob: values.birthday,
+      },
+    });
   }
 </script>
 

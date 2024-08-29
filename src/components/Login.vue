@@ -6,6 +6,7 @@
   import { API_URL } from "@/lib/utils";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
+  import { useMutation } from "@tanstack/vue-query";
 
   const schema = z.object({
     email: z
@@ -25,22 +26,21 @@
 
   const router = useRouter();
 
-  async function onSubmit(values: Record<string, any>) {
-    try {
-      const res = await axios.post(`${API_URL}/tokens`, {
-        user: values,
-      });
-      console.log(res);
-      if (res.status == 200) {
-        toast.success("Logged In successfully!");
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("email", res.data.email);
-
-        router.push("/");
-      }
-    } catch (error: any) {
+  const loginMn = useMutation({
+    mutationFn: (input: any) => axios.post(`${API_URL}/tokens`, input),
+    onSuccess: (res) => {
+      toast.success("Logged In successfully!");
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("email", res.data.email);
+      router.push("/dashboard");
+    },
+    onError: (error: any) => {
       toast.error(error.message);
-    }
+    },
+  });
+
+  async function onSubmit(values: Record<string, any>) {
+    loginMn.mutate({ user: values });
   }
 </script>
 

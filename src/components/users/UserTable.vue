@@ -52,7 +52,7 @@
             /></Button>
           </TableCell>
         </TableRow>
-        <TableRow v-else>
+        <TableRow v-else class="w-full" colspan="8">
           <div class="font-medium w-full text-center">No data</div>
         </TableRow>
       </TableBody>
