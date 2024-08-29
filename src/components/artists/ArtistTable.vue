@@ -8,10 +8,10 @@
     TableRow,
   } from "@/components/ui/table";
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
-  import { TUser } from "@/type";
+  import { TArtist } from "@/type";
   import { Button } from "../ui/button";
   const props = defineProps<{
-    users?: TUser[];
+    artists?: TArtist[];
   }>();
 </script>
 
@@ -32,16 +32,19 @@
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow v-if="props.users" v-for="user in props.users" :key="user.id">
-          <TableCell>{{ user.id }}</TableCell>
-          <TableCell>{{ user.first_name }}</TableCell>
-          <TableCell>{{ user.last_name }}</TableCell>
-          <TableCell>{{ user.email }}</TableCell>
-          <TableCell>{{ user.gender }}</TableCell>
-          <TableCell>{{ user.address }}</TableCell>
-          <TableCell>{{ user.phone }}</TableCell>
+        <TableRow
+          v-if="props.artists"
+          v-for="artist in props.artists"
+          :key="artist.id"
+        >
+          <TableCell>{{ artist.id }}</TableCell>
+          <TableCell>{{ artist.name }}</TableCell>
+          <TableCell>{{ artist.first_release_year }}</TableCell>
+          <TableCell>{{ artist.no_of_albums_released }}</TableCell>
+          <TableCell>{{ artist.gender }}</TableCell>
+          <TableCell>{{ artist.address }}</TableCell>
           <TableCell>{{
-            user.dob ? user.dob.toLocaleDateString() : "N/A"
+            artist.dob ? artist.dob.toLocaleDateString() : "N/A"
           }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
             <Button variant="outline" class="py-1 px-2">
@@ -54,7 +57,7 @@
         </TableRow>
         <TableRow v-else class="w-full">
           <TableCell class="font-medium w-full text-center" colspan="9"
-            >No users data</TableCell
+            >No artist data</TableCell
           >
         </TableRow>
       </TableBody>
