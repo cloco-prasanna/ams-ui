@@ -14,13 +14,27 @@
   }
 
   const schema = z.object({
-    username: z
+    firstname: z
       .string({
-        required_error: "Username is required.",
+        required_error: "Firstname is required.",
       })
       .min(2, {
-        message: "Username must be at least 2 characters.",
+        message: "Firstname must be at least 2 characters.",
       }),
+
+    lastname: z
+      .string({
+        required_error: "Lastname is required.",
+      })
+      .min(2, {
+        message: "Lastname must be at least 2 characters.",
+      }),
+
+    email: z
+      .string({
+        required_error: "Email is required.",
+      })
+      .email(),
 
     password: z
       .string({
@@ -30,49 +44,24 @@
         message: "Password must be at least 8 characters.",
       }),
 
-    favouriteNumber: z.coerce
+    phone: z.coerce
       .number({
-        invalid_type_error: "Favourite number must be a number.",
+        invalid_type_error: "Phone number must be a number.",
       })
-      .min(1, {
-        message: "Favourite number must be at least 1.",
+      .min(10, {
+        message: "Invalid phone number",
       })
-      .max(10, {
-        message: "Favourite number must be at most 10.",
-      })
-      .default(1)
       .optional(),
 
-    acceptTerms: z.boolean().refine((value) => value, {
-      message: "You must accept the terms and conditions.",
-      path: ["acceptTerms"],
-    }),
-
-    sendMeMails: z.boolean().optional(),
+    address: z
+      .string({
+        required_error: "Address is required.",
+      })
+      .optional(),
 
     birthday: z.coerce.date().optional(),
 
-    color: z.enum(["red", "green", "blue"]).optional(),
-
-    // Another enum example
-    marshmallows: z.enum(["not many", "a few", "a lot", "too many"]),
-
-    // Native enum example
-    sports: z.nativeEnum(Sports).describe("What is your favourite sport?"),
-
-    bio: z
-      .string()
-      .min(10, {
-        message: "Bio must be at least 10 characters.",
-      })
-      .max(160, {
-        message: "Bio must not be longer than 30 characters.",
-      })
-      .optional(),
-
-    customParent: z.string().optional(),
-
-    file: z.string().optional(),
+    gender: z.enum(["male", "female", "other"]).optional(),
   });
 
   function onSubmit(values: Record<string, any>) {
@@ -96,58 +85,19 @@
         label: 'Your secure password',
         inputProps: {
           type: 'password',
-          placeholder: '••••••••',
         },
-      },
-      favouriteNumber: {
-        description: 'Your favourite number between 1 and 10.',
-      },
-      acceptTerms: {
-        label: 'Accept terms and conditions.',
-        inputProps: {
-          required: true,
-        },
-      },
-
-      birthday: {
-        description: 'We need your birthday to send you a gift.',
-      },
-
-      sendMeMails: {
-        component: 'switch',
-      },
-
-      bio: {
-        component: 'textarea',
-      },
-
-      marshmallows: {
-        label: 'How many marshmallows fit in your mouth?',
-        component: 'radio',
-      },
-
-      file: {
-        label: 'Text file',
-        component: 'file',
       },
     }"
     @submit="onSubmit"
   >
-    <template #acceptTerms="slotProps">
-      <AutoFormField v-bind="slotProps" />
-      <div class="!mt-2 text-sm">
-        I agree to the
-        <button class="text-primary underline">terms and conditions</button>.
-      </div>
-    </template>
-
-    <template #customParent="slotProps">
-      <div class="flex items-end space-x-2">
-        <AutoFormField v-bind="slotProps" class="w-full" />
-        <Button type="button"> Check </Button>
-      </div>
-    </template>
-
-    <Button type="submit"> Submit </Button>
+    <div class="flex justify-between gap-2">
+      <p>
+        Already Registered?
+        <RouterLink to="/" class="underline hover:text-orange-800"
+          >Login</RouterLink
+        >
+      </p>
+      <Button type="submit"> Submit </Button>
+    </div>
   </AutoForm>
 </template>
