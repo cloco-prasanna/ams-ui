@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  import { Toaster } from "./components/ui/sonner";
+</script>
 
 <template>
   <HelloWorld msg="Vite + Vue" />
@@ -6,6 +8,7 @@
   <main>
     <RouterView />
   </main>
+  <Toaster richColors />
 </template>
 
 <style scoped>
