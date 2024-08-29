@@ -10,9 +10,23 @@
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TArtist } from "@/type";
   import { Button } from "../ui/button";
+  import { apiCall } from "@/lib/utils";
+  import { useQueryClient, useMutation } from "@tanstack/vue-query";
   const props = defineProps<{
     artists?: TArtist[];
   }>();
+
+  const queryClient = useQueryClient();
+  const deleteArtistMn = useMutation({
+    mutationFn: (id: number) => apiCall("delete", `/artists/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getArtists"] });
+    },
+  });
+
+  const deleteArtist = (id: number) => {
+    deleteArtistMn.mutate(id);
+  };
 </script>
 
 <template>
@@ -49,7 +63,11 @@
             <Button variant="outline" class="py-1 px-2">
               <PenBoxIcon class="h-4 w-4"
             /></Button>
-            <Button variant="outline" class="py-1 px-2">
+            <Button
+              variant="outline"
+              class="py-1 px-2"
+              @click="deleteArtist(artist.id)"
+            >
               <Trash2Icon class="h-4 w-4"
             /></Button>
           </TableCell>
