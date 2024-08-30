@@ -13,7 +13,7 @@
   const sidebarNavItems: Item[] = [
     {
       title: "Users",
-      href: "/dashboard",
+      href: "/dashboard/users",
     },
     {
       title: "Artists",
@@ -34,7 +34,7 @@
         :class="
           cn(
             'w-full text-left justify-start',
-            $route.currentRoute.value.path === `${item.href}` &&
+            $route.currentRoute.value.path.includes(`${item.href}`) &&
               'bg-muted hover:bg-muted'
           )
         "

@@ -4,6 +4,7 @@ import RegisterView from "./views/RegisterView.vue";
 import DashboardView from "./views/DashboardView.vue";
 import ArtistView from "./views/ArtistView.vue";
 import UserView from "./views/UserView.vue";
+import MusicView from "./views/MusicView.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -18,12 +19,16 @@ export default createRouter({
       component: DashboardView,
       children: [
         {
-          path: "",
+          path: "users",
           component: UserView,
         },
         {
           path: "artists",
-          component: ArtistView,
+
+          children: [
+            { path: "", component: ArtistView },
+            { path: ":id", component: MusicView },
+          ],
         },
       ],
     },
