@@ -14,6 +14,7 @@
   import UserForm from "@/components/forms/UserForm.vue";
   import { TUserResponse } from "@/type";
   import { ref } from "vue";
+  import { Plus } from "lucide-vue-next";
 
   const page = ref(1);
 
@@ -40,7 +41,10 @@
   <Dialog>
     <DialogTrigger as-child>
       <div class="flex justify-end mb-4">
-        <Button>Create User</Button>
+        <Button class="flex gap-2">
+          <Plus :size="20" />
+          Create User</Button
+        >
       </div>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[700px]">
