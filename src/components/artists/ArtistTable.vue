@@ -7,11 +7,19 @@
     TableHeader,
     TableRow,
   } from "@/components/ui/table";
+  import {
+    Dialog,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogContent,
+  } from "@/components/ui/dialog";
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TArtist } from "@/type";
   import { Button } from "../ui/button";
   import { apiCall } from "@/lib/utils";
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
+  import ArtistForm from "../forms/ArtistForm.vue";
   const props = defineProps<{
     artists?: TArtist[];
   }>();
@@ -35,11 +43,11 @@
       <TableHeader>
         <TableRow>
           <TableHead class="w-[100px]"> Id </TableHead>
-          <TableHead>Firstname</TableHead>
-          <TableHead>Lastname</TableHead>
-          <TableHead>Email</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Gender</TableHead>
           <TableHead>Address</TableHead>
+          <TableHead>First Release Year</TableHead>
+          <TableHead>No of Albums</TableHead>
           <TableHead>Dob</TableHead>
           <TableHead class="text-right"> Actions </TableHead>
         </TableRow>
@@ -52,17 +60,29 @@
         >
           <TableCell>{{ artist.id }}</TableCell>
           <TableCell>{{ artist.name }}</TableCell>
-          <TableCell>{{ artist.first_release_year }}</TableCell>
-          <TableCell>{{ artist.no_of_albums_released }}</TableCell>
           <TableCell>{{ artist.gender }}</TableCell>
           <TableCell>{{ artist.address }}</TableCell>
+          <TableCell>{{ artist.first_release_year }}</TableCell>
+          <TableCell>{{ artist.no_of_albums_released }}</TableCell>
           <TableCell>{{
-            artist.dob ? artist.dob.toLocaleDateString() : "N/A"
+            artist.dob ? new Date(artist.dob).toLocaleDateString() : "N/A"
           }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
-            <Button variant="outline" class="py-1 px-2">
-              <PenBoxIcon class="h-4 w-4"
-            /></Button>
+            <Dialog>
+              <DialogTrigger as-child>
+                <Button variant="outline" class="py-1 px-2">
+                  <PenBoxIcon class="h-4 w-4"
+                /></Button>
+              </DialogTrigger>
+              <DialogContent class="sm:max-w-[700px]">
+                <DialogHeader>
+                  <DialogTitle>User Form</DialogTitle>
+                </DialogHeader>
+                <div class="w-full">
+                  <ArtistForm :artist="artist" />
+                </div>
+              </DialogContent>
+            </Dialog>
             <Button
               variant="outline"
               class="py-1 px-2"

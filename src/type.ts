@@ -19,10 +19,10 @@ export type TUser = {
 };
 
 export type TArtist = {
-  id: number; // Assuming there's an `id` primary key column
+  id: number;
   name: string;
   dob?: Date | null;
-  gender?: string | null;
+  gender?: Gender;
   address?: string | null;
   first_release_year?: number | null;
   no_of_albums_released?: number | null;
