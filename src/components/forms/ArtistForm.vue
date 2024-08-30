@@ -20,7 +20,7 @@
   import { Input } from "@/components/ui/input";
   import { Gender, TArtist } from "@/type";
   import { apiCall } from "@/lib/utils";
-  import { useMutation } from "@tanstack/vue-query";
+  import { useMutation, useQueryClient } from "@tanstack/vue-query";
   import { toast } from "vue-sonner";
   import { toTypedSchema } from "@vee-validate/zod";
 
@@ -68,12 +68,15 @@
     })
   );
 
+  const queryClient = useQueryClient();
+
   const updateArtistMn = useMutation({
     mutationFn: ({ input, id }: { input: any; id: number }) =>
       apiCall("patch", `/artists/${id}`, { artist: input }),
     onSuccess: (res) => {
       console.log(res);
       toast.success("artist Updated");
+      queryClient.invalidateQueries({ queryKey: ["getArtists"] });
     },
     onError: (error: any) => {
       toast.error(error.message);
@@ -82,10 +85,13 @@
 
   const createArtistMn = useMutation({
     mutationFn: (input: any) => apiCall("post", `/artists/`, { artist: input }),
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res);
       toast.success("artist Created");
+      queryClient.invalidateQueries({ queryKey: ["getArtists"] });
     },
     onError: (error: any) => {
+      console.log(error);
       toast.error(error.message);
     },
   });

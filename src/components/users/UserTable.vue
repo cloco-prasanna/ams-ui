@@ -20,6 +20,7 @@
   } from "@/components/ui/dialog";
   import UserForm from "../forms/UserForm.vue";
   import { TUser } from "@/type";
+  import { toast } from "vue-sonner";
 
   const props = defineProps<{
     users?: TUser[];
@@ -27,7 +28,9 @@
   const queryClient = useQueryClient();
   const deleteUserMn = useMutation({
     mutationFn: (id: number) => apiCall("delete", `/users/${id}`),
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res);
+      toast.success("User deleted!");
       queryClient.invalidateQueries({ queryKey: ["getUsers"] });
     },
   });

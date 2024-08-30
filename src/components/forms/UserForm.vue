@@ -22,7 +22,7 @@
   import { Input } from "@/components/ui/input";
   import { Gender, TUser } from "@/type";
   import { apiCall } from "@/lib/utils";
-  import { useMutation } from "@tanstack/vue-query";
+  import { useMutation, useQueryClient } from "@tanstack/vue-query";
   import { toast } from "vue-sonner";
   import { toTypedSchema } from "@vee-validate/zod";
 
@@ -75,29 +75,36 @@
     })
   );
 
+  const queryClient = useQueryClient();
+
   const updateUserMn = useMutation({
     mutationFn: ({ input, id }: { input: any; id: number }) =>
       apiCall("patch", `/users/${id}`, { user: input }),
     onSuccess: (res) => {
       console.log(res);
       toast.success("User Updated");
+      queryClient.invalidateQueries({ queryKey: ["getUsers"] });
     },
     onError: (error: any) => {
+      console.log(error);
       toast.error(error.message);
     },
   });
 
   const createUserMn = useMutation({
     mutationFn: (input: any) => apiCall("post", `/users/`, { user: input }),
-    onSuccess: () => {
+    onSuccess: (res) => {
+      console.log(res);
       toast.success("User Created");
+      queryClient.invalidateQueries({ queryKey: ["getUsers"] });
     },
     onError: (error: any) => {
+      console.log(error);
       toast.error(error.message);
     },
   });
 
-  const { handleSubmit, errors, values } = useForm({
+  const { handleSubmit } = useForm({
     validationSchema: formSchema,
     initialValues: {
       first_name: user?.first_name ?? "",
