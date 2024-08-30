@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 export const API_URL = import.meta.env.VITE_API_URL;
 
 export const apiCall = async (
-  method: "get" | "post" | "put" | "delete",
+  method: "get" | "post" | "put" | "delete" | "patch",
   url: string,
   data: any = null,
   config: AxiosRequestConfig = {}
@@ -39,6 +39,8 @@ export const apiCall = async (
     case "post":
       return axios.post(`${API_URL}${url}`, data, axiosConfig);
     case "put":
+      return axios.put(`${API_URL}${url}`, data, axiosConfig);
+    case "patch":
       return axios.put(`${API_URL}${url}`, data, axiosConfig);
     case "delete":
       return axios.delete(`${API_URL}${url}`, axiosConfig);

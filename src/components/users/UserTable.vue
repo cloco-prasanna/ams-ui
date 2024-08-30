@@ -8,10 +8,19 @@
     TableRow,
   } from "@/components/ui/table";
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
-  import { TUser } from "@/type";
   import { Button } from "../ui/button";
   import { useMutation, useQueryClient } from "@tanstack/vue-query";
   import { apiCall } from "@/lib/utils";
+  import {
+    Dialog,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogContent,
+  } from "@/components/ui/dialog";
+  import UserForm from "../forms/UserForm.vue";
+  import { TUser } from "@/type";
 
   const props = defineProps<{
     users?: TUser[];
@@ -54,13 +63,24 @@
           <TableCell>{{ user.gender }}</TableCell>
           <TableCell>{{ user.address }}</TableCell>
           <TableCell>{{ user.phone }}</TableCell>
-          <TableCell>{{
-            user.dob ? user.dob.toLocaleDateString() : "N/A"
-          }}</TableCell>
+          <TableCell>{{ user.dob ?? "N/A" }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
-            <Button variant="outline" class="py-1 px-2">
-              <PenBoxIcon class="h-4 w-4"
-            /></Button>
+            <Dialog>
+              <DialogTrigger as-child>
+                <Button variant="outline" class="py-1 px-2">
+                  <PenBoxIcon class="h-4 w-4"
+                /></Button>
+              </DialogTrigger>
+              <DialogContent class="sm:max-w-[700px]">
+                <DialogHeader>
+                  <DialogTitle>User Form</DialogTitle>
+                </DialogHeader>
+                <div class="w-full">
+                  <UserForm :user="user" />
+                </div>
+              </DialogContent>
+            </Dialog>
+
             <Button
               variant="outline"
               class="py-1 px-2"
