@@ -41,3 +41,7 @@ export type TPagination = {
 export type TUserResponse = Omit<TPagination, "per_page"> & {
   users: TUser[];
 };
+
+export type TArtistResponse = Omit<TPagination, "per_page"> & {
+  artists: TArtist[];
+};
