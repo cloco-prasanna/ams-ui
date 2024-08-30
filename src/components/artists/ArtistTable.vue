@@ -59,7 +59,13 @@
           :key="artist.id"
         >
           <TableCell>{{ artist.id }}</TableCell>
-          <TableCell>{{ artist.name }}</TableCell>
+          <TableCell
+            ><Button asChild variant="link" class="p-0"
+              ><RouterLink :to="`artists/${artist.id}`">{{
+                artist.name
+              }}</RouterLink></Button
+            ></TableCell
+          >
           <TableCell>{{ artist.gender }}</TableCell>
           <TableCell>{{ artist.address }}</TableCell>
           <TableCell>{{ artist.first_release_year }}</TableCell>
