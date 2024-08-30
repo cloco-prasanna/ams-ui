@@ -4,6 +4,14 @@ export enum Gender {
   Other = "other",
 }
 
+export enum Genre {
+  RnB = "rnb",
+  Country = "country",
+  Classic = "classic",
+  Rock = "rock",
+  Jazz = "jazz",
+}
+
 export type TUser = {
   id: number;
   email: string;
@@ -30,6 +38,16 @@ export type TArtist = {
   updated_at: Date;
 };
 
+export type TMusic = {
+  id: number;
+  title: string;
+  artist_id: number;
+  album_name?: string | null;
+  genre?: string;
+  created_at: Date;
+  updated_at: Date;
+};
+
 export type TPagination = {
   current_page: number;
   last_page: number;
@@ -44,4 +62,8 @@ export type TUserResponse = Omit<TPagination, "per_page"> & {
 
 export type TArtistResponse = Omit<TPagination, "per_page"> & {
   artists: TArtist[];
+};
+
+export type TMusicResponse = Omit<TPagination, "per_page"> & {
+  musics: TMusic[];
 };
