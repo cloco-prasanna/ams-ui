@@ -13,7 +13,6 @@
   import { apiCall } from "@/lib/utils";
   import {
     Dialog,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,

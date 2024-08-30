@@ -10,13 +10,28 @@
     DialogTrigger,
     DialogContent,
   } from "@/components/ui/dialog";
+  import Pagination from "@/components/Pagination.vue";
   import UserForm from "@/components/forms/UserForm.vue";
+  import { TUserResponse } from "@/type";
+  import { ref } from "vue";
 
-  const { data: users } = useQuery({
-    queryKey: ["getUsers"],
+  const page = ref(1);
+
+  const per_page = ref(5);
+
+  const handleUpdatePerPage = (value: number) => {
+    per_page.value = value;
+    page.value = 1;
+  };
+
+  const { data } = useQuery({
+    queryKey: ["getUsers", page, per_page],
     queryFn: async () => {
-      const response = await apiCall("get", "/users");
-      return response.data.users;
+      const response = await apiCall(
+        "get",
+        `/users?page=${page.value}&per_page=${per_page.value}`
+      );
+      return response.data as TUserResponse;
     },
   });
 </script>
@@ -24,7 +39,9 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <Button>Add User</Button>
+      <div class="flex justify-end mb-4">
+        <Button>Create User</Button>
+      </div>
     </DialogTrigger>
     <DialogContent class="sm:max-w-[700px]">
       <DialogHeader>
@@ -35,5 +52,16 @@
       </div>
     </DialogContent>
   </Dialog>
-  <UserTable :users="users" />
+  <UserTable :users="data?.users || []" />
+  <Pagination
+    v-if="data"
+    :current_page="page"
+    :last_page="data.last_page"
+    :prev="data.prev"
+    :next="data.next"
+    :per_page="per_page"
+    @next-page="page++"
+    @prev-page="page--"
+    @update:per_page="handleUpdatePerPage"
+  />
 </template>

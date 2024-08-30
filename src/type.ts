@@ -29,3 +29,15 @@ export type TArtist = {
   created_at: Date;
   updated_at: Date;
 };
+
+export type TPagination = {
+  current_page: number;
+  last_page: number;
+  prev: number | null;
+  next: number | null;
+  per_page: number;
+};
+
+export type TUserResponse = Omit<TPagination, "per_page"> & {
+  users: TUser[];
+};

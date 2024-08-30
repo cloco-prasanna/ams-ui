@@ -14,7 +14,7 @@ export const apiCall = async (
   url: string,
   data: any = null,
   config: AxiosRequestConfig = {}
-): Promise<AxiosResponse<any>> => {
+): Promise<AxiosResponse> => {
   const headers: Record<string, string> = {};
   let token: string | null = null;
   if (typeof window !== undefined) {

@@ -1,12 +1,6 @@
-<script>
+<script setup>
   import Register from "@/components/Register.vue";
   import Header from "@/components/Header.vue";
-  export default {
-    components: {
-      Register,
-      Header,
-    },
-  };
 </script>
 
 <template>
