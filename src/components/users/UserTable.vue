@@ -62,7 +62,9 @@
           <TableCell>{{ user.gender }}</TableCell>
           <TableCell>{{ user.address }}</TableCell>
           <TableCell>{{ user.phone }}</TableCell>
-          <TableCell>{{ user.dob ?? "N/A" }}</TableCell>
+          <TableCell>{{
+            user.dob ? new Date(user.dob).toLocaleDateString() : "N/A"
+          }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>
               <DialogTrigger as-child>
