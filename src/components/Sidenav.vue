@@ -24,6 +24,20 @@
 
 <template>
   <nav class="flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1">
+    <RouterLink to="/dashboard">
+      <Button
+        variant="ghost"
+        :class="
+          cn(
+            'w-full text-left justify-start',
+            $route.currentRoute.value.path == `/dashboard` &&
+              'bg-muted hover:bg-muted'
+          )
+        "
+      >
+        Dashboard
+      </Button>
+    </RouterLink>
     <RouterLink
       v-for="item in sidebarNavItems"
       :key="item.title"

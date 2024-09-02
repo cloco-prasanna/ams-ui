@@ -19,11 +19,11 @@
 
   <div class="p-10">
     <h1 class="mb-4">Welcome, {{ loggedInUser }}</h1>
-    <div class="flex gap-4 items-start">
-      <div class="min-w-[200px] border">
+    <div class="flex lg:flex-row flex-col gap-4 items-start">
+      <div class="lg:min-w-[200px] border">
         <Sidenav />
       </div>
-      <div class="flex-1">
+      <div class="xl:flex-1">
         <RouterView />
       </div>
     </div>

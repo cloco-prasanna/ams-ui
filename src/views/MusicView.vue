@@ -3,7 +3,7 @@
   import { TMusicResponse } from "@/type";
   import { useQuery } from "@tanstack/vue-query";
   import { ref } from "vue";
-  import { useRoute } from "vue-router";
+  import { useRoute, useRouter } from "vue-router";
   import {
     Dialog,
     DialogHeader,
@@ -15,6 +15,7 @@
   import MusicForm from "@/components/forms/MusicForm.vue";
   import MusicTable from "@/components/artists/MusicTable.vue";
   import Pagination from "@/components/Pagination.vue";
+  import { ArrowLeft, Plus } from "lucide-vue-next";
 
   const route = useRoute();
   const artist_id = Number(route.params.id);
@@ -29,36 +30,46 @@
   };
 
   const { data } = useQuery({
-    queryKey: ["getMusics", page, per_page],
+    queryKey: ["getMusics", page, per_page, artist_id],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/artists/${artist_id}/musics?page=${page.value}&per_page=${per_page.value}`
+        `/artists/${artist_id}dsf/musics?page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TMusicResponse;
     },
   });
+
+  const router = useRouter();
+  const handleReturn = () => {
+    router.back();
+  };
 </script>
 
 <template>
-  <Dialog>
-    <DialogTrigger as-child>
-      <div class="flex justify-end mb-4">
-        <Button class="flex gap-2">
-          <Plus :size="20" />
-          Create Music</Button
-        >
-      </div>
-    </DialogTrigger>
-    <DialogContent class="sm:max-w-[700px]">
-      <DialogHeader>
-        <DialogTitle>Music Form</DialogTitle>
-      </DialogHeader>
-      <div class="w-full">
-        <MusicForm :artist_id="artist_id" />
-      </div>
-    </DialogContent>
-  </Dialog>
+  <div class="flex justify-between">
+    <Button @click="handleReturn" variant="ghost">
+      <ArrowLeft />
+    </Button>
+    <Dialog>
+      <DialogTrigger as-child>
+        <div class="mb-4">
+          <Button class="flex gap-2">
+            <Plus :size="20" />
+            Create Music</Button
+          >
+        </div>
+      </DialogTrigger>
+      <DialogContent class="sm:max-w-[700px]">
+        <DialogHeader>
+          <DialogTitle>Music Form</DialogTitle>
+        </DialogHeader>
+        <div class="w-full">
+          <MusicForm :artist_id="artist_id" />
+        </div>
+      </DialogContent>
+    </Dialog>
+  </div>
   <MusicTable :musics="data?.musics || []" :artist_id="artist_id" />
   <Pagination
     v-if="data"

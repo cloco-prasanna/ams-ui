@@ -40,7 +40,7 @@
 <template>
   <Dialog>
     <DialogTrigger as-child>
-      <div class="flex justify-end mb-4">
+      <div class="mb-4">
         <Button class="flex gap-2">
           <Plus :size="20" />
           Create User</Button
