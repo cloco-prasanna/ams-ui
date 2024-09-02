@@ -6,7 +6,7 @@ import ArtistView from "./views/ArtistView.vue";
 import UserView from "./views/UserView.vue";
 import MusicView from "./views/MusicView.vue";
 
-export default createRouter({
+const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", component: HomeView },
@@ -34,3 +34,16 @@ export default createRouter({
     },
   ],
 });
+
+router.beforeEach(async (to, from, next) => {
+  const isAuthenticated = !!window.localStorage.getItem("token");
+  if (isAuthenticated && (to.path == "/" || to.path == "/register")) {
+    next("/dashboard");
+  } else if (!isAuthenticated && to.path !== "/" && to.path !== "/register") {
+    next("/");
+  } else {
+    next();
+  }
+});
+
+export default router;

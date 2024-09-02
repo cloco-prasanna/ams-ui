@@ -58,7 +58,7 @@
           :key="music.id"
         >
           <TableCell>{{ music.id }}</TableCell>
-          <TableCell>{{ music.title }} ></TableCell>
+          <TableCell>{{ music.title }}</TableCell>
           <TableCell>{{ music.album_name }}</TableCell>
           <TableCell>{{ music.genre }}</TableCell>
 
