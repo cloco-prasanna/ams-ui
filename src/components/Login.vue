@@ -26,7 +26,7 @@
   const router = useRouter();
 
   const loginMn = useMutation({
-    mutationFn: (input: any) => apiCall("post", "/tokens", input),
+    mutationFn: (input: any) => apiCall("post", "/auth/login", input),
     onSuccess: (res) => {
       toast.success("Logged In successfully!");
       localStorage.setItem("token", res.data.token);

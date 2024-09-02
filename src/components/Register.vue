@@ -62,7 +62,7 @@
   const router = useRouter();
 
   const registerMn = useMutation({
-    mutationFn: (input: any) => axios.post(`${API_URL}/users`, input),
+    mutationFn: (input: any) => axios.post(`${API_URL}/auth/register`, input),
     onSuccess: () => {
       toast.success("Registration successful!");
       router.push("/");
