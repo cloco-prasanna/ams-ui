@@ -58,10 +58,10 @@
 </script>
 
 <template>
-  <div class="flex justify-between gap-4">
+  <div class="flex justify-between gap-4 flex-wrap mb-4">
     <Dialog>
       <DialogTrigger as-child>
-        <div class="mb-4">
+        <div class="">
           <Button class="flex gap-2">
             <Plus :size="20" />
             Create Artist</Button

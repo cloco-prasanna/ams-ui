@@ -54,7 +54,7 @@
       </TableHeader>
       <TableBody>
         <TableRow
-          v-if="props.artists"
+          v-if="props.artists?.length"
           v-for="artist in props.artists"
           :key="artist.id"
         >
@@ -66,12 +66,12 @@
               }}</RouterLink></Button
             ></TableCell
           >
-          <TableCell>{{ artist.gender }}</TableCell>
-          <TableCell>{{ artist.address }}</TableCell>
-          <TableCell>{{ artist.first_release_year }}</TableCell>
-          <TableCell>{{ artist.no_of_albums_released }}</TableCell>
+          <TableCell>{{ artist.gender ?? "--" }}</TableCell>
+          <TableCell>{{ artist.address ?? "--" }}</TableCell>
+          <TableCell>{{ artist.first_release_year ?? "--" }}</TableCell>
+          <TableCell>{{ artist.no_of_albums_released ?? "--" }}</TableCell>
           <TableCell>{{
-            artist.dob ? new Date(artist.dob).toLocaleDateString() : "N/A"
+            artist.dob ? new Date(artist.dob).toLocaleDateString() : "--"
           }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>

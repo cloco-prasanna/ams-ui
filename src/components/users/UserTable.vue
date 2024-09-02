@@ -59,14 +59,14 @@
       <TableBody>
         <TableRow v-if="props.users" v-for="user in props.users" :key="user.id">
           <TableCell>{{ user.id }}</TableCell>
-          <TableCell>{{ user.first_name }}</TableCell>
-          <TableCell>{{ user.last_name }}</TableCell>
+          <TableCell>{{ user.first_name ?? "--" }}</TableCell>
+          <TableCell>{{ user.last_name ?? "--" }}</TableCell>
           <TableCell>{{ user.email }}</TableCell>
           <TableCell>{{ user.gender }}</TableCell>
-          <TableCell>{{ user.address }}</TableCell>
-          <TableCell>{{ user.phone }}</TableCell>
+          <TableCell>{{ user.address ?? "--" }}</TableCell>
+          <TableCell>{{ user.phone ?? "--" }}</TableCell>
           <TableCell>{{
-            user.dob ? new Date(user.dob).toLocaleDateString() : "N/A"
+            user.dob ? new Date(user.dob).toLocaleDateString() : "--"
           }}</TableCell>
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>

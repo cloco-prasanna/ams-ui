@@ -48,9 +48,12 @@
 
 <template>
   <div class="flex justify-between">
-    <Button @click="handleReturn" variant="ghost">
-      <ArrowLeft />
-    </Button>
+    <div class="flex items-center gap-2">
+      <Button @click="handleReturn" variant="link" class="px-0 py-0">
+        <ArrowLeft />
+      </Button>
+      Back to Artists
+    </div>
     <Dialog>
       <DialogTrigger as-child>
         <div class="mb-4">

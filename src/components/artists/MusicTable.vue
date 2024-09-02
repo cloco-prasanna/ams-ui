@@ -53,14 +53,14 @@
       </TableHeader>
       <TableBody>
         <TableRow
-          v-if="props.musics"
+          v-if="props.musics?.length"
           v-for="music in props.musics"
           :key="music.id"
         >
           <TableCell>{{ music.id }}</TableCell>
           <TableCell>{{ music.title }}</TableCell>
-          <TableCell>{{ music.album_name }}</TableCell>
-          <TableCell>{{ music.genre }}</TableCell>
+          <TableCell>{{ music.album_name ?? "--" }}</TableCell>
+          <TableCell>{{ music.genre ?? "--" }}</TableCell>
 
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>
