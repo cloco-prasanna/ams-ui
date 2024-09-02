@@ -48,3 +48,20 @@ export const apiCall = async (
       throw new Error("Unsupported request method");
   }
 };
+
+export const exportCSV = (data: any[], fileName?: string) => {
+  const headers = Object.keys(data[0]);
+  const rows = data.map((obj) => headers.map((header) => obj[header]));
+  const headerRow = headers.join(",");
+  const csvRows = [headerRow, ...rows.map((row) => row.join(","))];
+  const csvContent = csvRows.join("\n");
+  const blob = new Blob([csvContent], { type: "text/csv;chartset-utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute(
+    "download",
+    fileName ? `${fileName}.csv` : "export_data.csv"
+  );
+  link.click();
+};
