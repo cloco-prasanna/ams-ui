@@ -11,7 +11,7 @@
   <div class="p-10 max-w-[1400px] mx-auto">
     <h1 class="mb-4">Welcome, {{ loggedInUser }}</h1>
     <div class="flex xl:flex-row flex-col gap-10 items-start">
-      <div class="xl:min-w-[200px] border">
+      <div class="xl:min-w-[200px] border rounded-lg">
         <Sidenav />
       </div>
       <div class="xl:flex-1 w-full">
