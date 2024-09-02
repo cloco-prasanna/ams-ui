@@ -10,11 +10,12 @@
     DialogContent,
   } from "@/components/ui/dialog";
   import Pagination from "@/components/Pagination.vue";
-  import { TArtist, TArtistResponse } from "@/type";
+  import { TArtistResponse } from "@/type";
   import ArtistForm from "@/components/forms/ArtistForm.vue";
   import ArtistTable from "@/components/artists/ArtistTable.vue";
   import { ref } from "vue";
   import { FileDown, FileUp, Plus } from "lucide-vue-next";
+  import { toast } from "vue-sonner";
 
   const page = ref(1);
 
@@ -38,6 +39,21 @@
 
   const handleCSVExport = () => {
     if (data.value?.artists) exportCSV(data.value?.artists, "artists");
+  };
+
+  const handleCSVImport = async (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await apiCall("post", `/artists/import`, formData);
+      if (response.status === 200) {
+        toast.success("Artists imported!");
+      }
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 </script>
 
@@ -65,9 +81,17 @@
       <Button class="flex gap-2" @click="handleCSVExport" variant="secondary">
         <FileDown :size="20" /> Export
       </Button>
-      <Button class="flex gap-2" @click="handleCSVExport" variant="secondary">
-        <FileUp :size="20" /> Import
+
+      <Button class="flex gap-2 cursor-pointer" variant="secondary" asChild>
+        <Label for="upload-button"> <FileUp :size="20" /> Import </Label>
       </Button>
+      <Input
+        id="upload-button"
+        type="file"
+        class="hidden"
+        accept=".csv"
+        @change="handleCSVImport"
+      />
     </div>
   </div>
   <artistTable :artists="data?.artists || []" />
