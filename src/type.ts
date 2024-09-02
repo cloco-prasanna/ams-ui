@@ -54,6 +54,7 @@ export type TPagination = {
   prev: number | null;
   next: number | null;
   per_page: number;
+  totalCount: number;
 };
 
 export type TUserResponse = Omit<TPagination, "per_page"> & {
@@ -66,4 +67,9 @@ export type TArtistResponse = Omit<TPagination, "per_page"> & {
 
 export type TMusicResponse = Omit<TPagination, "per_page"> & {
   musics: TMusic[];
+};
+
+export type TMusicGenresResponse = {
+  totalCount: string;
+  genres: { name: string; count: number }[];
 };

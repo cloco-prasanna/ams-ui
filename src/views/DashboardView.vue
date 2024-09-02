@@ -1,31 +1,116 @@
-<script lang="ts">
-  import Header from "@/components/Header.vue";
-  import Sidenav from "@/components/Sidenav.vue";
-
-  export default {
-    components: {
-      Sidenav,
-      Header,
-    },
-  };
-</script>
-
 <script setup lang="ts">
-  const loggedInUser = localStorage.getItem("email");
+  import { apiCall } from "@/lib/utils";
+  import { TArtistResponse, TMusicGenresResponse, TUserResponse } from "@/type";
+  import { useQuery } from "@tanstack/vue-query";
+  import { MicVocalIcon, UsersRoundIcon } from "lucide-vue-next";
+  import SimpleUserTable from "@/components/users/SimpleUserTable.vue";
+  import { Button } from "@/components/ui/button";
+  import { DonutChart } from "@/components/ui/chart-donut";
+  import { computed, watch } from "vue";
+  import { Card } from "@/components/ui/card";
+
+  const { data: users } = useQuery({
+    queryKey: ["getUsers"],
+    queryFn: async () => {
+      const response = await apiCall("get", `/users?per_page=5`);
+      return response.data as TUserResponse;
+    },
+  });
+
+  const { data: artists } = useQuery({
+    queryKey: ["getArtists"],
+    queryFn: async () => {
+      const response = await apiCall("get", `/artists?per_page=5`);
+      return response.data as TArtistResponse;
+    },
+  });
+
+  const { data: musicGenres } = useQuery({
+    queryKey: ["getMusicGenres"],
+    queryFn: async () => {
+      const response = await apiCall("get", `/artists/1/musics/genres`);
+      return response.data as TMusicGenresResponse;
+    },
+  });
+
+  const donutData = computed(() => {
+    return (
+      musicGenres?.value?.genres.map((genre) => ({
+        name: genre.name,
+        count: genre.count,
+      })) || []
+    );
+  });
+
+  const colors = ["brown", "orange", "yellow", "teal", "pink"];
 </script>
 
 <template>
-  <Header />
-
-  <div class="p-10">
-    <h1 class="mb-4">Welcome, {{ loggedInUser }}</h1>
-    <div class="flex xl:flex-row flex-col gap-4 items-start">
-      <div class="xl:min-w-[200px] border">
-        <Sidenav />
+  <div class="grid grid-cols-2 gap-10">
+    <RouterLink
+      to="/dashboard/users"
+      class="px-8 py-6 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+    >
+      <div class="space-y-2">
+        <p class="font-medium">Users</p>
+        <p class="text-4xl font-bold">
+          {{ users?.totalCount }}
+        </p>
       </div>
-      <div class="xl:flex-1 w-full">
-        <RouterView />
+      <UsersRoundIcon :size="40" />
+    </RouterLink>
+    <RouterLink
+      to="/dashboard/artists"
+      class="px-8 py-6 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+    >
+      <div class="space-y-2">
+        <p class="font-medium">Artists</p>
+        <p class="text-4xl font-bold">
+          {{ artists?.totalCount }}
+        </p>
+      </div>
+      <MicVocalIcon :size="40" />
+    </RouterLink>
+  </div>
+  <div class="grid grid-cols-2 gap-10 mt-10">
+    <div class="border border-slate-200 rounded-lg">
+      <div
+        class="flex justify-between p-4 py-2 bg-secondary items-center text-sm"
+      >
+        <p>Recent Users</p>
+        <Button class="p-0" variant="link" asChild
+          ><RouterLink to="/dashboard/users"> View All</RouterLink></Button
+        >
+      </div>
+      <div class="">
+        <SimpleUserTable :users="users?.users" />
       </div>
     </div>
+    <Card class="p-6 space-y-10">
+      <div class="" v-if="donutData.length > 0">
+        <DonutChart
+          index="name"
+          :category="'count'"
+          :data="donutData"
+          :colors="['brown', 'orange', 'yellow', 'teal', 'pink']"
+        />
+      </div>
+      <div class="mt-4 space-y-2">
+        <p class="font-semibold text-center">Musics by Genre</p>
+        <ul class="space-y-1 flex gap-4 flex-wrap">
+          <li
+            v-for="(genre, index) in donutData"
+            :key="genre.name"
+            class="flex items-center space-x-2"
+          >
+            <span
+              :style="{ backgroundColor: colors[index] }"
+              class="w-3 h-3 rounded-full inline-block"
+            ></span>
+            <span>{{ genre.name }}: {{ genre.count }}</span>
+          </li>
+        </ul>
+      </div>
+    </Card>
   </div>
 </template>

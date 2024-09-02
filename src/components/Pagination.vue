@@ -11,7 +11,7 @@
   import { ref, watch } from "vue";
   import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 
-  const props = defineProps<TPagination>();
+  const props = defineProps<Omit<TPagination, "totalCount">>();
   const emit = defineEmits<{
     (event: "next-page"): void;
     (event: "prev-page"): void;

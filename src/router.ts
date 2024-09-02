@@ -5,6 +5,7 @@ import DashboardView from "./views/DashboardView.vue";
 import ArtistView from "./views/ArtistView.vue";
 import UserView from "./views/UserView.vue";
 import MusicView from "./views/MusicView.vue";
+import LayoutView from "./views/LayoutView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -16,8 +17,12 @@ const router = createRouter({
     },
     {
       path: "/dashboard",
-      component: DashboardView,
+      component: LayoutView,
       children: [
+        {
+          path: "",
+          component: DashboardView,
+        },
         {
           path: "users",
           component: UserView,
