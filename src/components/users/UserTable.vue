@@ -18,6 +18,17 @@
     DialogTrigger,
     DialogContent,
   } from "@/components/ui/dialog";
+  import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog";
   import UserForm from "../forms/UserForm.vue";
   import { TUser } from "@/type";
   import { toast } from "vue-sonner";
@@ -90,13 +101,28 @@
               </DialogContent>
             </Dialog>
 
-            <Button
-              variant="outline"
-              class="py-1 px-2"
-              @click="deleteUser(user.id)"
-            >
-              <Trash2Icon class="h-4 w-4"
-            /></Button>
+            <AlertDialog>
+              <AlertDialogTrigger as-child>
+                <Button variant="outline" class="py-1 px-2">
+                  <Trash2Icon class="h-4 w-4"
+                /></Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    this user from our server.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction @click="deleteUser(user.id)"
+                    >Delete</AlertDialogAction
+                  >
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TableCell>
         </TableRow>
         <TableRow v-else class="w-full">

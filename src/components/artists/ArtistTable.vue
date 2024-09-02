@@ -14,6 +14,17 @@
     DialogTrigger,
     DialogContent,
   } from "@/components/ui/dialog";
+  import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/components/ui/alert-dialog";
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TArtist } from "@/type";
   import { Button } from "../ui/button";
@@ -89,13 +100,29 @@
                 </div>
               </DialogContent>
             </Dialog>
-            <Button
-              variant="outline"
-              class="py-1 px-2"
-              @click="deleteArtist(artist.id)"
-            >
-              <Trash2Icon class="h-4 w-4"
-            /></Button>
+
+            <AlertDialog>
+              <AlertDialogTrigger as-child>
+                <Button variant="outline" class="py-1 px-2">
+                  <Trash2Icon class="h-4 w-4"
+                /></Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    this artist and all his albums from our server.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction @click="deleteArtist(artist.id)"
+                    >Delete</AlertDialogAction
+                  >
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </TableCell>
         </TableRow>
         <TableRow v-else class="w-full">
