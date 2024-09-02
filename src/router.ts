@@ -6,6 +6,7 @@ import ArtistView from "./views/ArtistView.vue";
 import UserView from "./views/UserView.vue";
 import MusicView from "./views/MusicView.vue";
 import LayoutView from "./views/LayoutView.vue";
+import { useAuth } from "./hooks/useAuth";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,7 +42,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const isAuthenticated = !!window.localStorage.getItem("token");
+  const { role, isAuthenticated } = useAuth();
   if (isAuthenticated && (to.path == "/" || to.path == "/register")) {
     next("/dashboard");
   } else if (!isAuthenticated && to.path !== "/" && to.path !== "/register") {
