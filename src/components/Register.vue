@@ -7,6 +7,7 @@
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import { useMutation } from "@tanstack/vue-query";
+  import { Separator } from "./ui/separator";
 
   const schema = z.object({
     first_name: z
@@ -83,36 +84,44 @@
 </script>
 
 <template>
-  <AutoForm
-    class="w-2/3 space-y-6 mx-auto max-w-[700px] my-10 p-4 rounded-lg border border-gray-300"
-    :schema="schema"
-    :field-config="{
-      first_name: {
-        label: 'Firstname',
-      },
-      last_name: {
-        label: 'Firstname',
-      },
-      password: {
-        inputProps: {
-          type: 'password',
-          placeholder: '••••••••',
-        },
-      },
-      dob: {
-        label: 'Date of Birth',
-      },
-    }"
-    @submit="onSubmit"
+  <div
+    class="mx-auto max-w-[700px] my-10 p-4 rounded-lg border border-gray-300"
   >
-    <div class="flex justify-between gap-2">
-      <p>
-        Already Registered?
-        <RouterLink to="/" class="underline hover:text-orange-800"
-          >Login</RouterLink
-        >
-      </p>
-      <Button type="submit"> Submit </Button>
-    </div>
-  </AutoForm>
+    <h1 class="text-lg font-bold flex justify-between">
+      <span>User Registration </span> <span>Cloco AMS</span>
+    </h1>
+    <Separator class="my-4" />
+    <AutoForm
+      class="space-y-6"
+      :schema="schema"
+      :field-config="{
+        first_name: {
+          label: 'Firstname',
+        },
+        last_name: {
+          label: 'Firstname',
+        },
+        password: {
+          inputProps: {
+            type: 'password',
+            placeholder: '••••••••',
+          },
+        },
+        dob: {
+          label: 'Date of Birth',
+        },
+      }"
+      @submit="onSubmit"
+    >
+      <div class="flex justify-between gap-2">
+        <p>
+          Already Registered?
+          <RouterLink to="/" class="underline hover:text-orange-800"
+            >Login</RouterLink
+          >
+        </p>
+        <Button type="submit"> Submit </Button>
+      </div>
+    </AutoForm>
+  </div>
 </template>

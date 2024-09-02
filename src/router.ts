@@ -13,6 +13,13 @@ const router = createRouter({
   routes: [
     { path: "/", component: HomeView },
     {
+      path: "/artists",
+      children: [
+        { path: "", component: ArtistView },
+        { path: ":id", component: MusicView },
+      ],
+    },
+    {
       path: "/register",
       component: RegisterView,
     },
@@ -45,7 +52,7 @@ router.beforeEach(async (to, from, next) => {
   const { role, isAuthenticated } = useAuth();
   if (isAuthenticated && (to.path == "/" || to.path == "/register")) {
     next("/dashboard");
-  } else if (!isAuthenticated && to.path !== "/" && to.path !== "/register") {
+  } else if (!isAuthenticated && to.path.includes("dashboard")) {
     next("/");
   } else {
     next();

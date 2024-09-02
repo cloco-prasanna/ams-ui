@@ -93,7 +93,7 @@
               </DialogTrigger>
               <DialogContent class="sm:max-w-[700px]">
                 <DialogHeader>
-                  <DialogTitle>User Form</DialogTitle>
+                  <DialogTitle>Update User Form</DialogTitle>
                 </DialogHeader>
                 <div class="w-full">
                   <UserForm :user="user" />
