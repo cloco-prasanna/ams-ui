@@ -24,6 +24,7 @@ export type TUser = {
   created_at: Date;
   updated_at: Date;
   dob?: Date;
+  role: string;
 };
 
 export type TArtist = {

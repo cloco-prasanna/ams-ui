@@ -53,6 +53,8 @@
           <TableHead>Address</TableHead>
           <TableHead>Phone</TableHead>
           <TableHead>Dob</TableHead>
+          <TableHead>Role</TableHead>
+
           <TableHead class="text-right"> Actions </TableHead>
         </TableRow>
       </TableHeader>
@@ -65,9 +67,12 @@
           <TableCell>{{ user.gender }}</TableCell>
           <TableCell>{{ user.address ?? "--" }}</TableCell>
           <TableCell>{{ user.phone ?? "--" }}</TableCell>
+
           <TableCell>{{
             user.dob ? new Date(user.dob).toLocaleDateString() : "--"
           }}</TableCell>
+          <TableCell>{{ user.role ?? "--" }}</TableCell>
+
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>
               <DialogTrigger as-child>
@@ -96,7 +101,7 @@
         </TableRow>
         <TableRow v-else class="w-full">
           <TableCell class="font-medium w-full text-center" colspan="9"
-            >No users data</TableCell
+            >No user found</TableCell
           >
         </TableRow>
       </TableBody>

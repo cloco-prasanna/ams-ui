@@ -100,7 +100,7 @@
         </TableRow>
         <TableRow v-else class="w-full">
           <TableCell class="font-medium w-full text-center" colspan="9"
-            >No artist data</TableCell
+            >No artist found</TableCell
           >
         </TableRow>
       </TableBody>
