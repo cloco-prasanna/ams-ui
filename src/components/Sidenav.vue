@@ -4,6 +4,7 @@
   import Button from "./ui/button/Button.vue";
   import {
     LayoutDashboardIcon,
+    LogOut,
     LucideIcon,
     Mic2Icon,
     UsersRound,
@@ -29,43 +30,60 @@
       icon: Mic2Icon,
     },
   ];
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    router.push("/");
+  };
 </script>
 
 <template>
-  <nav class="flex lg:flex-col">
-    <RouterLink to="/dashboard">
-      <Button
-        variant="ghost"
-        :class="
-          cn(
-            'w-full text-left justify-start flex items-center gap-2',
-            $route.currentRoute.value.path == `/dashboard` &&
-              'bg-muted hover:bg-muted'
-          )
-        "
+  <div class="flex flex-col justify-between h-full">
+    <nav class="flex lg:flex-col">
+      <RouterLink to="/dashboard">
+        <Button
+          variant="ghost"
+          :class="
+            cn(
+              'w-full text-left justify-start flex items-center gap-2',
+              $route.currentRoute.value.path == `/dashboard` &&
+                'bg-muted hover:bg-muted'
+            )
+          "
+        >
+          <LayoutDashboardIcon :size="20" /> Dashboard
+        </Button>
+      </RouterLink>
+      <RouterLink
+        v-for="item in sidebarNavItems"
+        :key="item.title"
+        :to="item.href"
       >
-        <LayoutDashboardIcon :size="20" /> Dashboard
-      </Button>
-    </RouterLink>
-    <RouterLink
-      v-for="item in sidebarNavItems"
-      :key="item.title"
-      :to="item.href"
-    >
-      <Button
-        variant="ghost"
-        :class="
-          cn(
-            'w-full text-left justify-start  flex items-center gap-2',
-            $route.currentRoute.value.path.includes(`${item.href}`) &&
-              'bg-muted hover:bg-muted'
-          )
-        "
-      >
-        <component :is="item.icon" class="w-5 h-5" />
+        <Button
+          variant="ghost"
+          :class="
+            cn(
+              'w-full text-left justify-start  flex items-center gap-2',
+              $route.currentRoute.value.path.includes(`${item.href}`) &&
+                'bg-muted hover:bg-muted'
+            )
+          "
+        >
+          <component :is="item.icon" class="w-5 h-5" />
 
-        {{ item.title }}
-      </Button>
-    </RouterLink>
-  </nav>
+          {{ item.title }}
+        </Button>
+      </RouterLink>
+    </nav>
+    <div class="flex-1"></div>
+    <Button
+      class="flex items-start gap-4"
+      variant="outline"
+      @click="handleLogout"
+    >
+      <LogOut :size="20" /> Logout
+    </Button>
+  </div>
 </template>
