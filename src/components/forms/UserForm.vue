@@ -135,7 +135,11 @@
         <FormItem>
           <FormLabel>Firstname</FormLabel>
           <FormControl>
-            <Input type="text" placeholder="shadcn" v-bind="componentField" />
+            <Input
+              type="text"
+              placeholder="eg. John "
+              v-bind="componentField"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -144,7 +148,7 @@
         <FormItem>
           <FormLabel>Lastname</FormLabel>
           <FormControl>
-            <Input type="text" placeholder="shadcn" v-bind="componentField" />
+            <Input type="text" placeholder="eg. Doe" v-bind="componentField" />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -168,7 +172,11 @@
         <FormItem>
           <FormLabel>Phone</FormLabel>
           <FormControl>
-            <Input type="phone" placeholder="shadcn" v-bind="componentField" />
+            <Input
+              type="phone"
+              placeholder="eg. 9865000000"
+              v-bind="componentField"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -177,7 +185,11 @@
         <FormItem>
           <FormLabel>Address</FormLabel>
           <FormControl>
-            <Input type="" placeholder="shadcn" v-bind="componentField" />
+            <Input
+              type=""
+              placeholder="eg. patan, lalitpur"
+              v-bind="componentField"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -218,6 +230,8 @@
         </FormItem>
       </FormField>
     </div>
-    <Button type="submit"> Submit </Button>
+    <div class="flex justify-end">
+      <Button type="submit"> Submit </Button>
+    </div>
   </form>
 </template>
