@@ -19,7 +19,7 @@
 <template>
   <Header />
 
-  <div class="p-10 max-w-[1400px] mx-auto">
+  <div class="sm:p-10 p-4 max-w-[1400px] mx-auto">
     <h1 class="mb-4 text-lg">
       Welcome, <span class="font-medium">{{ data?.first_name }} san 😄 </span>
     </h1>

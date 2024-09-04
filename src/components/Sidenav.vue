@@ -41,7 +41,7 @@
 
 <template>
   <div class="flex flex-col justify-between h-full">
-    <nav class="flex lg:flex-col">
+    <nav class="flex lg:flex-col overflow-x-scroll sm:overflow-auto">
       <RouterLink to="/dashboard">
         <Button
           variant="ghost"
