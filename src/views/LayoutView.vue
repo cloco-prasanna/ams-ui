@@ -23,8 +23,8 @@
     <h1 class="mb-4 text-lg">
       Welcome, <span class="font-medium">{{ data?.first_name }} san 😄 </span>
     </h1>
-    <div class="flex xl:flex-row flex-col gap-10">
-      <div class="xl:min-w-[200px] border rounded-lg">
+    <div class="flex lg:flex-row flex-col gap-10">
+      <div class="lg:min-w-[200px] border rounded-lg lg:max-h-[70vh]">
         <Sidenav />
       </div>
       <div class="xl:flex-1 w-full">
