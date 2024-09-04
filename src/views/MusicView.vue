@@ -16,6 +16,7 @@
   import MusicTable from "@/components/artists/MusicTable.vue";
   import Pagination from "@/components/Pagination.vue";
   import { ArrowLeft, Plus } from "lucide-vue-next";
+  import { Input } from "@/components/ui/input";
 
   const route = useRoute();
   const artist_id = Number(route.params.id);
@@ -24,17 +25,19 @@
 
   const per_page = ref(5);
 
+  const search = ref("");
+
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
     page.value = 1;
   };
 
   const { data } = useQuery({
-    queryKey: ["getMusics", page, per_page, artist_id],
+    queryKey: ["getMusics", page, per_page, artist_id, search],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/artists/${artist_id}dsf/musics?page=${page.value}&per_page=${per_page.value}`
+        `/artists/${artist_id}dsf/musics?search=${search.value}&page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TMusicResponse;
     },
@@ -47,13 +50,13 @@
 </script>
 
 <template>
+  <div class="flex items-center gap-2 mb-4">
+    <Button @click="handleReturn" variant="link" class="px-0 py-0">
+      <ArrowLeft />
+    </Button>
+    Back to Artists
+  </div>
   <div class="flex justify-between">
-    <div class="flex items-center gap-2">
-      <Button @click="handleReturn" variant="link" class="px-0 py-0">
-        <ArrowLeft />
-      </Button>
-      Back to Artists
-    </div>
     <Dialog>
       <DialogTrigger as-child>
         <div class="mb-4">
@@ -72,6 +75,9 @@
         </div>
       </DialogContent>
     </Dialog>
+    <div class="">
+      <Input type="text" placeholder="Search" v-model="search" />
+    </div>
   </div>
   <MusicTable :musics="data?.musics || []" :artist_id="artist_id" />
   <Pagination

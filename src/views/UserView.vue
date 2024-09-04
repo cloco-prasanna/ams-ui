@@ -10,6 +10,7 @@
     DialogTrigger,
     DialogContent,
   } from "@/components/ui/dialog";
+  import { Input } from "@/components/ui/input";
   import Pagination from "@/components/Pagination.vue";
   import UserForm from "@/components/forms/UserForm.vue";
   import { TUserResponse } from "@/type";
@@ -20,17 +21,19 @@
 
   const per_page = ref(5);
 
+  const search = ref("");
+
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
     page.value = 1;
   };
 
   const { data } = useQuery({
-    queryKey: ["getUsers", page, per_page],
+    queryKey: ["getUsers", page, per_page, search],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/users?page=${page.value}&per_page=${per_page.value}`
+        `/users?search=${search.value}&page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TUserResponse;
     },
@@ -38,24 +41,29 @@
 </script>
 
 <template>
-  <Dialog>
-    <DialogTrigger as-child>
-      <div class="mb-4">
-        <Button class="flex gap-2">
-          <Plus :size="20" />
-          Create User</Button
-        >
-      </div>
-    </DialogTrigger>
-    <DialogContent class="sm:max-w-[700px]">
-      <DialogHeader>
-        <DialogTitle>User Form</DialogTitle>
-      </DialogHeader>
-      <div class="w-full">
-        <UserForm />
-      </div>
-    </DialogContent>
-  </Dialog>
+  <div class="flex justify-between">
+    <Dialog>
+      <DialogTrigger as-child>
+        <div class="mb-4">
+          <Button class="flex gap-2">
+            <Plus :size="20" />
+            Create User</Button
+          >
+        </div>
+      </DialogTrigger>
+      <DialogContent class="sm:max-w-[700px]">
+        <DialogHeader>
+          <DialogTitle>User Form</DialogTitle>
+        </DialogHeader>
+        <div class="w-full">
+          <UserForm />
+        </div>
+      </DialogContent>
+    </Dialog>
+    <div class="">
+      <Input type="text" placeholder="Search" v-model="search" />
+    </div>
+  </div>
   <UserTable :users="data?.users || []" />
   <Pagination
     v-if="data"

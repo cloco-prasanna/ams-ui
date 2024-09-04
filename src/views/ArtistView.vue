@@ -16,10 +16,13 @@
   import { ref } from "vue";
   import { FileDown, FileUp, Plus } from "lucide-vue-next";
   import { toast } from "vue-sonner";
+  import { Input } from "@/components/ui/input";
 
   const page = ref(1);
 
   const per_page = ref(5);
+
+  const search = ref("");
 
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
@@ -27,11 +30,11 @@
   };
 
   const { data } = useQuery({
-    queryKey: ["getArtists", page, per_page],
+    queryKey: ["getArtists", page, per_page, search],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/artists?page=${page.value}&per_page=${per_page.value}`
+        `/artists?search=${search.value}&page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TArtistResponse;
     },
@@ -78,6 +81,9 @@
       </DialogContent>
     </Dialog>
     <div class="flex gap-2">
+      <div class="">
+        <Input type="text" placeholder="Search" v-model="search" />
+      </div>
       <Button class="flex gap-2" @click="handleCSVExport" variant="secondary">
         <FileDown :size="20" /> Export
       </Button>
