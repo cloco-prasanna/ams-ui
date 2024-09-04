@@ -57,14 +57,14 @@
       <TableHeader>
         <TableRow>
           <TableHead class="w-[100px]"> Id </TableHead>
-          <TableHead>Firstname</TableHead>
-          <TableHead>Lastname</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Gender</TableHead>
-          <TableHead>Address</TableHead>
+          <!-- <TableHead>Address</TableHead> -->
           <TableHead>Phone</TableHead>
           <TableHead>Dob</TableHead>
           <TableHead>Role</TableHead>
+          <TableHead>Created At</TableHead>
 
           <TableHead class="text-right"> Actions </TableHead>
         </TableRow>
@@ -72,17 +72,24 @@
       <TableBody>
         <TableRow v-if="props.users" v-for="user in props.users" :key="user.id">
           <TableCell>{{ user.id }}</TableCell>
-          <TableCell>{{ user.first_name ?? "--" }}</TableCell>
-          <TableCell>{{ user.last_name ?? "--" }}</TableCell>
+          <TableCell
+            >{{ user.first_name ?? "--" }}
+            {{ user.last_name ?? "--" }}</TableCell
+          >
           <TableCell>{{ user.email }}</TableCell>
           <TableCell>{{ user.gender }}</TableCell>
-          <TableCell>{{ user.address ?? "--" }}</TableCell>
+          <!-- <TableCell>{{ user.address ?? "--" }}</TableCell> -->
           <TableCell>{{ user.phone ?? "--" }}</TableCell>
-
           <TableCell>{{
             user.dob ? new Date(user.dob).toLocaleDateString() : "--"
           }}</TableCell>
           <TableCell>{{ user.role ?? "--" }}</TableCell>
+
+          <TableCell>{{
+            user.created_at
+              ? new Date(user.created_at).toLocaleDateString()
+              : "--"
+          }}</TableCell>
 
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>

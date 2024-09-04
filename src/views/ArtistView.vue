@@ -13,7 +13,7 @@
   import { TArtistResponse } from "@/type";
   import ArtistForm from "@/components/forms/ArtistForm.vue";
   import ArtistTable from "@/components/artists/ArtistTable.vue";
-  import { ref } from "vue";
+  import { ref, watch } from "vue";
   import { FileDown, FileUp, Plus } from "lucide-vue-next";
   import { toast } from "vue-sonner";
   import { Input } from "@/components/ui/input";
@@ -26,8 +26,11 @@
 
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
-    page.value = 1;
   };
+
+  watch([search, per_page], () => {
+    page.value = 1;
+  });
 
   const { data } = useQuery({
     queryKey: ["getArtists", page, per_page, search],
@@ -80,7 +83,7 @@
         </div>
       </DialogContent>
     </Dialog>
-    <div class="flex gap-2">
+    <div class="flex gap-2 flex-wrap">
       <div class="">
         <Input type="text" placeholder="Search" v-model="search" />
       </div>
