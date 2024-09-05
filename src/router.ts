@@ -54,7 +54,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const { role, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   if (isAuthenticated && (to.path == "/" || to.path == "/register")) {
     next("/dashboard");
   } else if (!isAuthenticated && to.path.includes("dashboard")) {

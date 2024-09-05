@@ -1,27 +1,47 @@
 <script setup lang="ts">
   import * as z from "zod";
-  import { Button } from "@/components/ui/button";
-  import { AutoForm } from "@/components/ui/auto-form";
   import { apiCall } from "@/lib/utils";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import { useMutation } from "@tanstack/vue-query";
   import { Separator } from "./ui/separator";
+  import { toTypedSchema } from "@vee-validate/zod";
+  import { useForm } from "vee-validate";
+  import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form";
+  import { Input } from "@/components/ui/input";
+  import InputPassword from "./forms/InputPassword.vue";
+  import Button from "./ui/button/Button.vue";
 
-  const schema = z.object({
-    email: z
-      .string({
-        required_error: "Email is required.",
-      })
-      .email(),
+  const schema = toTypedSchema(
+    z.object({
+      email: z
+        .string({
+          required_error: "Email is required.",
+        })
+        .email(),
 
-    password: z
-      .string({
-        required_error: "Password is required.",
-      })
-      .min(8, {
-        message: "Password must be at least 8 characters.",
-      }),
+      password: z
+        .string({
+          required_error: "Password is required.",
+        })
+        .min(8, {
+          message: "Password must be at least 8 characters.",
+        }),
+    })
+  );
+
+  const { handleSubmit } = useForm({
+    validationSchema: schema,
+    initialValues: {
+      email: "",
+      password: "",
+    },
   });
 
   const router = useRouter();
@@ -39,9 +59,9 @@
     },
   });
 
-  async function onSubmit(values: Record<string, any>) {
+  const onSubmit = handleSubmit((values) => {
     loginMn.mutate({ user: values });
-  }
+  });
 </script>
 
 <template>
@@ -50,35 +70,25 @@
   >
     <h1 class="text-lg font-bold">Login to Cloco AMS</h1>
     <Separator class="my-4" />
-    <AutoForm
-      class="space-y-6"
-      :schema="schema"
-      :field-config="{
-        email: {
-          label: 'Email Address',
-          inputProps: {
-            type: 'email',
-            placeholder: 'Enter email address',
-          },
-        },
-        password: {
-          inputProps: {
-            type: 'password',
-            placeholder: 'Enter password',
-          },
-        },
-      }"
-      @submit="onSubmit"
-    >
-      <div class="flex justify-between gap-2">
-        <p>
-          Not Registered?
-          <RouterLink to="/register" class="underline hover:text-orange-800"
-            >Create an account</RouterLink
-          >
-        </p>
-        <Button type="submit"> Submit </Button>
-      </div>
-    </AutoForm>
+
+    <form @submit="onSubmit" class="space-y-6">
+      <FormField v-slot="{ componentField }" name="email">
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input
+              type="email"
+              placeholder="Enter your email address"
+              v-bind="componentField"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <InputPassword name="password" label="Password" />
+
+      <Button type="submit" class="w-full">Login</Button>
+    </form>
   </div>
 </template>

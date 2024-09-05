@@ -34,6 +34,7 @@
             :type="inputType"
             :placeholder="placeholder ?? 'Enter password'"
             v-bind="componentField"
+            class="pr-10"
           />
 
           <Button

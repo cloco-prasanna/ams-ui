@@ -6,13 +6,7 @@
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import * as z from "zod";
-  import {
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-  } from "@/components/ui/form";
+
   import {
     Select,
     SelectContent,
@@ -41,6 +35,7 @@
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover";
+  import InputPassword from "./forms/InputPassword.vue";
 
   const df = new DateFormatter("en-US", {
     dateStyle: "long",
@@ -48,42 +43,51 @@
 
   const placeholder = ref();
   const schema = toTypedSchema(
-    z.object({
-      first_name: z
-        .string({
-          required_error: "Firstname is required.",
-        })
-        .min(2, {
-          message: "Firstname must be at least 2 characters.",
+    z
+      .object({
+        first_name: z
+          .string({
+            required_error: "Firstname is required.",
+          })
+          .min(2, {
+            message: "Firstname must be at least 2 characters.",
+          }),
+        last_name: z
+          .string({
+            required_error: "Lastname is required.",
+          })
+          .min(2, {
+            message: "Lastname must be at least 2 characters.",
+          }),
+        email: z
+          .string({
+            required_error: "Email is required.",
+          })
+          .email(),
+        password: z
+          .string()
+          .min(8, "Password must be at least 8 characters long")
+          .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+            "Password must include at least one uppercase letter, lowercase letter, number, and special character"
+          ),
+        confirm_password: z.string({
+          required_error: "Confirm Password is required",
         }),
-      last_name: z
-        .string({
-          required_error: "Lastname is required.",
-        })
-        .min(2, {
-          message: "Lastname must be at least 2 characters.",
+        phone: z.string().min(10, {
+          message: "Invalid phone number",
         }),
-      email: z
-        .string({
-          required_error: "Email is required.",
-        })
-        .email(),
-      password: z
-        .string()
-        .min(8, "Password must be at least 8 characters long")
-        .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-          "Password must include at least one uppercase letter, lowercase letter, number, and special character"
-        ),
-      phone: z.string().min(10, {
-        message: "Invalid phone number",
-      }),
-      address: z.string().optional(),
-      dob: z
-        .string()
-        .refine((v) => v, { message: "A date of birth is required." }),
-      gender: z.enum(["male", "female", "other"]).optional(),
-    })
+        address: z.string().optional(),
+        dob: z
+          .string()
+          .refine((v) => v, { message: "A date of birth is required." }),
+        gender: z.enum(["male", "female", "other"]).optional(),
+      })
+      // Refinement to ensure password and confirm_password match
+      .refine((data) => data.password === data.confirm_password, {
+        message: "Passwords do not match",
+        path: ["confirm_password"], // this will trigger an error on the confirm_password componentField
+      })
   );
 
   const router = useRouter();
@@ -108,6 +112,7 @@
       password: "",
       phone: "",
       address: "",
+      confirm_password: "",
       gender: Gender.Other,
     },
   });
@@ -132,84 +137,73 @@
     <Separator class="my-4" />
     <form @submit="onSubmit" class="space-y-6">
       <div class="grid grid-cols-2 gap-4">
-        <FormField v-slot="{ field }" name="first_name">
+        <FormField v-slot="{ componentField }" name="first_name">
           <FormItem>
             <FormLabel>Firstname</FormLabel>
             <FormControl>
               <Input
                 type="text"
                 placeholder="Enter your firstname"
-                v-bind="field"
+                v-bind="componentField"
               />
             </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ field }" name="last_name">
+        <FormField v-slot="{ componentField }" name="last_name">
           <FormItem>
             <FormLabel>Lastname</FormLabel>
             <FormControl>
               <Input
                 type="text"
                 placeholder="Enter your lastname"
-                v-bind="field"
+                v-bind="componentField"
               />
             </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
       </div>
-      <FormField v-slot="{ field }" name="email">
+      <FormField v-slot="{ componentField }" name="email">
         <FormItem>
           <FormLabel>Email</FormLabel>
           <FormControl>
             <Input
               type="email"
               placeholder="Enter your email address"
-              v-bind="field"
+              v-bind="componentField"
             />
           </FormControl>
           <FormMessage />
         </FormItem>
       </FormField>
 
-      <FormField v-slot="{ field }" name="password">
-        <FormItem>
-          <FormLabel>Password</FormLabel>
-          <FormControl>
-            <Input
-              type="password"
-              placeholder="Enter your password"
-              v-bind="field"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+      <InputPassword name="password" label="Password" />
+      <InputPassword name="confirm_password" label="Confirm Password" />
 
-      <FormField v-slot="{ field }" name="phone">
+      <FormField v-slot="{ componentField }" name="phone">
         <FormItem>
           <FormLabel>Phone Number</FormLabel>
           <FormControl>
             <Input
               type="text"
               placeholder="Enter your phone number"
-              v-bind="field"
+              v-bind="componentField"
             />
           </FormControl>
           <FormMessage />
         </FormItem>
       </FormField>
 
-      <FormField v-slot="{ field }" name="address">
+      <FormField v-slot="{ componentField }" name="address">
         <FormItem>
           <FormLabel>Address</FormLabel>
           <FormControl>
             <Input
               type="text"
               placeholder="Enter your address"
-              v-bind="field"
+              v-bind="componentField"
             />
           </FormControl>
           <FormMessage />

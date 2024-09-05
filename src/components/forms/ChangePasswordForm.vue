@@ -1,20 +1,14 @@
 <script setup lang="ts">
   import { useForm } from "vee-validate";
   import * as z from "zod";
-  import {
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-  } from "@/components/ui/form";
   import { Button } from "@/components/ui/button";
-  import { Input } from "@/components/ui/input";
   import { apiCall } from "@/lib/utils";
   import { useMutation } from "@tanstack/vue-query";
   import { toast } from "vue-sonner";
   import { toTypedSchema } from "@vee-validate/zod";
   import { Card } from "@/components/ui/card";
+  4;
+  import InputPassword from "./InputPassword.vue";
 
   const formSchema = toTypedSchema(
     z
@@ -66,47 +60,22 @@
 <template>
   <Card class="p-6">
     <h1 class="text-lg font-bold mb-4">Change Password</h1>
-
     <form @submit="onSubmit" class="space-y-4">
-      <FormField v-slot="{ componentField }" name="current_password">
-        <FormItem>
-          <FormLabel>Current Password</FormLabel>
-          <FormControl>
-            <Input
-              type="password"
-              placeholder="Enter current password"
-              v-bind="componentField"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="new_password">
-        <FormItem>
-          <FormLabel>New Password</FormLabel>
-          <FormControl>
-            <Input
-              type="password"
-              placeholder="Enter new password"
-              v-bind="componentField"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="confirm_new_password">
-        <FormItem>
-          <FormLabel>Confirm New Password</FormLabel>
-          <FormControl>
-            <Input
-              type="password"
-              placeholder="Enter new password"
-              v-bind="componentField"
-            />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
+      <InputPassword
+        name="current_password"
+        label="Current Password"
+        placeholder="Current Password"
+      />
+      <InputPassword
+        name="new_password"
+        label="New Password"
+        placeholder="Enter new password"
+      />
+      <InputPassword
+        name="confirm_new_password"
+        label="Confirm Password"
+        placeholder="Enter new password"
+      />
       <div class="flex justify-end">
         <Button type="submit"> Submit </Button>
       </div>
