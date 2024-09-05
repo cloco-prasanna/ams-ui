@@ -82,7 +82,7 @@
               </DialogTrigger>
               <DialogContent class="sm:max-w-[700px]">
                 <DialogHeader>
-                  <DialogTitle>User Form</DialogTitle>
+                  <DialogTitle>Update Music Form</DialogTitle>
                 </DialogHeader>
                 <div class="w-full">
                   <MusicForm :music="music" :artist_id="artist_id" />

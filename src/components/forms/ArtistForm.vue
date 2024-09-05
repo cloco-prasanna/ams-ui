@@ -125,7 +125,11 @@
       <FormItem>
         <FormLabel>Name</FormLabel>
         <FormControl>
-          <Input type="text" placeholder="shadcn" v-bind="componentField" />
+          <Input
+            type="text"
+            placeholder="eg. Michael Jackson"
+            v-bind="componentField"
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -170,7 +174,11 @@
         <FormItem>
           <FormLabel>First Release Year</FormLabel>
           <FormControl>
-            <Input type="number" placeholder="shadcn" v-bind="componentField" />
+            <Input
+              type="number"
+              placeholder="eg. 2020"
+              v-bind="componentField"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -179,7 +187,7 @@
         <FormItem>
           <FormLabel>No of Albums Released</FormLabel>
           <FormControl>
-            <Input type="number" placeholder="shadcn" v-bind="componentField" />
+            <Input type="number" placeholder="eg. 3" v-bind="componentField" />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -190,12 +198,18 @@
       <FormItem>
         <FormLabel>Address</FormLabel>
         <FormControl>
-          <Input type="" placeholder="shadcn" v-bind="componentField" />
+          <Input
+            type=""
+            placeholder="eg. patan, lalitpur"
+            v-bind="componentField"
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
     </FormField>
 
-    <Button type="submit"> Submit </Button>
+    <div class="flex justify-end">
+      <Button type="submit"> Submit </Button>
+    </div>
   </form>
 </template>

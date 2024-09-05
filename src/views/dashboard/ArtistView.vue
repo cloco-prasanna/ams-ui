@@ -76,7 +76,7 @@
       </DialogTrigger>
       <DialogContent class="sm:max-w-[700px]">
         <DialogHeader>
-          <DialogTitle>Artist Form</DialogTitle>
+          <DialogTitle>Create Artist Form</DialogTitle>
         </DialogHeader>
         <div class="w-full">
           <ArtistForm />

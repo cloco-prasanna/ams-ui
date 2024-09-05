@@ -31,12 +31,16 @@
 
   const formSchema = toTypedSchema(
     z.object({
-      title: z.string({
-        required_error: "Title is required.",
-      }),
-      album_name: z.string({
-        required_error: "Album Name is required.",
-      }),
+      title: z
+        .string({
+          required_error: "Title is required.",
+        })
+        .min(1, "Title is required"),
+      album_name: z
+        .string({
+          required_error: "Album Name is required.",
+        })
+        .min(1, "Album Name is required"),
       genre: z.string().optional(),
     })
   );
@@ -94,7 +98,11 @@
       <FormItem>
         <FormLabel>Title</FormLabel>
         <FormControl>
-          <Input type="text" placeholder="shadcn" v-bind="componentField" />
+          <Input
+            type="text"
+            placeholder="eg. Billie Jean"
+            v-bind="componentField"
+          />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -103,7 +111,7 @@
       <FormItem>
         <FormLabel>Album Name</FormLabel>
         <FormControl>
-          <Input type="text" placeholder="shadcn" v-bind="componentField" />
+          <Input type="text" placeholder="Thriller" v-bind="componentField" />
         </FormControl>
         <FormMessage />
       </FormItem>
@@ -132,6 +140,8 @@
         <FormMessage />
       </FormItem>
     </FormField>
-    <Button type="submit"> Submit </Button>
+    <div class="flex justify-end">
+      <Button type="submit"> Submit </Button>
+    </div>
   </form>
 </template>

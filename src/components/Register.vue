@@ -1,63 +1,90 @@
 <script setup lang="ts">
-  import * as z from "zod";
-  import axios from "axios";
-  import { Button } from "@/components/ui/button";
-  import { AutoForm } from "@/components/ui/auto-form";
   import { API_URL } from "@/lib/utils";
+  import { useMutation } from "@tanstack/vue-query";
+  import axios from "axios";
+  import { useForm } from "vee-validate";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
-  import { useMutation } from "@tanstack/vue-query";
+  import * as z from "zod";
+  import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form";
+  import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select";
+  import { Input } from "@/components/ui/input";
+  import { Button } from "@/components/ui/button";
+  import { toTypedSchema } from "@vee-validate/zod";
+  import { Gender } from "@/type";
+  import { computed, ref } from "vue";
+  import {
+    CalendarDate,
+    DateFormatter,
+    getLocalTimeZone,
+    parseDate,
+    today,
+  } from "@internationalized/date";
+  import { cn } from "@/lib/utils";
+  import { toDate } from "radix-vue/date";
+  import { Calendar } from "@/components/ui/calendar";
+  import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+  } from "@/components/ui/popover";
 
-  const schema = z.object({
-    first_name: z
-      .string({
-        required_error: "Firstname is required.",
-      })
-      .min(2, {
-        message: "Firstname must be at least 2 characters.",
-      }),
-
-    last_name: z
-      .string({
-        required_error: "Lastname is required.",
-      })
-      .min(2, {
-        message: "Lastname must be at least 2 characters.",
-      }),
-
-    email: z
-      .string({
-        required_error: "Email is required.",
-      })
-      .email(),
-
-    password: z
-      .string({
-        required_error: "Password is required.",
-      })
-      .min(8, {
-        message: "Password must be at least 8 characters.",
-      }),
-
-    phone: z.coerce
-      .number({
-        invalid_type_error: "Phone number must be a number.",
-      })
-      .min(10, {
-        message: "Invalid phone number",
-      })
-      .optional(),
-
-    address: z
-      .string({
-        required_error: "Address is required.",
-      })
-      .optional(),
-
-    dob: z.coerce.date().optional(),
-
-    gender: z.enum(["male", "female", "other"]).optional(),
+  const df = new DateFormatter("en-US", {
+    dateStyle: "long",
   });
+
+  const placeholder = ref();
+  const schema = toTypedSchema(
+    z.object({
+      first_name: z
+        .string({
+          required_error: "Firstname is required.",
+        })
+        .min(2, {
+          message: "Firstname must be at least 2 characters.",
+        }),
+      last_name: z
+        .string({
+          required_error: "Lastname is required.",
+        })
+        .min(2, {
+          message: "Lastname must be at least 2 characters.",
+        }),
+      email: z
+        .string({
+          required_error: "Email is required.",
+        })
+        .email(),
+      password: z
+        .string()
+        .min(8, "Password must be at least 8 characters long")
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+          "Password must include at least one uppercase letter, lowercase letter, number, and special character"
+        ),
+      phone: z.string().min(10, {
+        message: "Invalid phone number",
+      }),
+      address: z.string().optional(),
+      dob: z
+        .string()
+        .refine((v) => v, { message: "A date of birth is required." }),
+      gender: z.enum(["male", "female", "other"]).optional(),
+    })
+  );
 
   const router = useRouter();
 
@@ -72,47 +99,204 @@
     },
   });
 
-  async function onSubmit(values: Record<string, any>) {
-    registerMn.mutate({
-      user: {
-        ...values,
-        dob: values.birthday,
-      },
-    });
-  }
+  const { handleSubmit, values, setFieldValue } = useForm({
+    validationSchema: schema,
+    initialValues: {
+      first_name: "",
+      last_name: "",
+      email: "",
+      password: "",
+      phone: "",
+      address: "",
+      gender: Gender.Other,
+    },
+  });
+
+  const dateValue = computed({
+    get: () => (values.dob ? parseDate(values.dob) : undefined),
+    set: (val) => val,
+  });
+
+  const onSubmit = handleSubmit((values) => {
+    registerMn.mutate({ user: { ...values, dob: values.dob } });
+  });
 </script>
 
 <template>
-  <AutoForm
-    class="w-2/3 space-y-6 mx-auto max-w-[700px] my-10 p-4 rounded-lg border border-gray-300"
-    :schema="schema"
-    :field-config="{
-      first_name: {
-        label: 'Firstname',
-      },
-      last_name: {
-        label: 'Firstname',
-      },
-      password: {
-        inputProps: {
-          type: 'password',
-          placeholder: '••••••••',
-        },
-      },
-      dob: {
-        label: 'Date of Birth',
-      },
-    }"
-    @submit="onSubmit"
+  <div
+    class="mx-auto max-w-[700px] my-10 p-4 rounded-lg border border-gray-300"
   >
-    <div class="flex justify-between gap-2">
-      <p>
-        Already Registered?
-        <RouterLink to="/" class="underline hover:text-orange-800"
-          >Login</RouterLink
-        >
-      </p>
-      <Button type="submit"> Submit </Button>
-    </div>
-  </AutoForm>
+    <h1 class="text-lg font-bold flex justify-between mb-4">
+      <span>User Registration</span> <span>Cloco AMS</span>
+    </h1>
+    <Separator class="my-4" />
+    <form @submit="onSubmit" class="space-y-6">
+      <div class="grid grid-cols-2 gap-4">
+        <FormField v-slot="{ field }" name="first_name">
+          <FormItem>
+            <FormLabel>Firstname</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                placeholder="Enter your firstname"
+                v-bind="field"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+
+        <FormField v-slot="{ field }" name="last_name">
+          <FormItem>
+            <FormLabel>Lastname</FormLabel>
+            <FormControl>
+              <Input
+                type="text"
+                placeholder="Enter your lastname"
+                v-bind="field"
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </div>
+      <FormField v-slot="{ field }" name="email">
+        <FormItem>
+          <FormLabel>Email</FormLabel>
+          <FormControl>
+            <Input
+              type="email"
+              placeholder="Enter your email address"
+              v-bind="field"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ field }" name="password">
+        <FormItem>
+          <FormLabel>Password</FormLabel>
+          <FormControl>
+            <Input
+              type="password"
+              placeholder="Enter your password"
+              v-bind="field"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ field }" name="phone">
+        <FormItem>
+          <FormLabel>Phone Number</FormLabel>
+          <FormControl>
+            <Input
+              type="text"
+              placeholder="Enter your phone number"
+              v-bind="field"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <FormField v-slot="{ field }" name="address">
+        <FormItem>
+          <FormLabel>Address</FormLabel>
+          <FormControl>
+            <Input
+              type="text"
+              placeholder="Enter your address"
+              v-bind="field"
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      </FormField>
+
+      <div class="grid grid-cols-2 gap-4">
+        <FormField v-slot="{ componentField }" name="gender">
+          <FormItem>
+            <FormLabel>Gender</FormLabel>
+            <Select v-bind="componentField">
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a gender" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem
+                    v-for="(gender, key) in Gender"
+                    :key="key"
+                    :value="gender"
+                  >
+                    {{ key }}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+        <FormField name="dob">
+          <FormItem class="flex flex-col space-y-2 mt-3">
+            <FormLabel>Date of birth</FormLabel>
+            <Popover>
+              <PopoverTrigger as-child>
+                <FormControl>
+                  <Button
+                    variant="outline"
+                    :class="
+                      cn(
+                        ' ps-3 text-start font-normal',
+                        !dateValue && 'text-muted-foreground'
+                      )
+                    "
+                  >
+                    <span>{{
+                      dateValue ? df.format(toDate(dateValue)) : "Pick a date"
+                    }}</span>
+                    <CalendarIcon class="ms-auto h-4 w-4 opacity-50" />
+                  </Button>
+                  <input hidden />
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent class="w-auto p-0">
+                <Calendar
+                  v-model:placeholder="placeholder"
+                  v-model="dateValue"
+                  calendar-label="Date of birth"
+                  initial-focus
+                  :min-value="new CalendarDate(1900, 1, 1)"
+                  :max-value="today(getLocalTimeZone())"
+                  @update:model-value="(v:any) => {
+                if (v) {
+                  setFieldValue('dob', v.toString())
+                }
+                else {
+                  setFieldValue('dob', undefined)
+                }
+              }"
+                />
+              </PopoverContent>
+            </Popover>
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </div>
+
+      <div class="flex justify-between gap-2">
+        <p>
+          Already Registered?
+          <RouterLink to="/" class="underline hover:text-orange-800"
+            >Login</RouterLink
+          >
+        </p>
+        <Button type="submit">Submit</Button>
+      </div>
+    </form>
+  </div>
 </template>
