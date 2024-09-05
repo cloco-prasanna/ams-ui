@@ -103,7 +103,7 @@ export const errorHandler = (error: AxiosError) => {
         );
         break;
       default:
-        toast.error(`Error ${status}:  ${error.response.data}`);
+        toast.error(`Error ${status}:  ${error.response.statusText}`);
         break;
     }
   } else {
