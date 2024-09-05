@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { API_URL } from "@/lib/utils";
+  import { API_URL, errorHandler } from "@/lib/utils";
   import { useMutation } from "@tanstack/vue-query";
   import axios from "axios";
   import { useForm } from "vee-validate";
@@ -99,7 +99,8 @@
       router.push("/");
     },
     onError: (error: any) => {
-      toast.error(error.message);
+      console.log(error);
+      errorHandler(error);
     },
   });
 

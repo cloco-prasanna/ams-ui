@@ -28,7 +28,7 @@
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TMusic } from "@/type";
   import { Button } from "../ui/button";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import MusicForm from "../forms/MusicForm.vue";
   const props = defineProps<{
@@ -42,6 +42,10 @@
       apiCall("delete", `/artists/${props.artist_id}/musics/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getMusics"] });
+    },
+    onError: (error: any) => {
+      console.log(error);
+      errorHandler(error);
     },
   });
 

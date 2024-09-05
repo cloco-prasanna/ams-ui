@@ -28,7 +28,7 @@
   import { PenBoxIcon, Trash2Icon } from "lucide-vue-next";
   import { TArtist } from "@/type";
   import { Button } from "../ui/button";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import ArtistForm from "../forms/ArtistForm.vue";
   const props = defineProps<{
@@ -40,6 +40,10 @@
     mutationFn: (id: number) => apiCall("delete", `/artists/${id}`),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["getArtists"] });
+    },
+    onError: (error: any) => {
+      console.log(error);
+      errorHandler(error);
     },
   });
 

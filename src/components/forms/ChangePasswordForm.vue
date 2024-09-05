@@ -2,7 +2,7 @@
   import { useForm } from "vee-validate";
   import * as z from "zod";
   import { Button } from "@/components/ui/button";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import { useMutation } from "@tanstack/vue-query";
   import { toast } from "vue-sonner";
   import { toTypedSchema } from "@vee-validate/zod";
@@ -41,7 +41,8 @@
       toast.success("Password Updated");
     },
     onError: (error: any) => {
-      toast.error(error.message);
+      console.log(error);
+      errorHandler(error);
     },
   });
 

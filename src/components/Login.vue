@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import * as z from "zod";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import { useMutation } from "@tanstack/vue-query";
@@ -55,7 +55,8 @@
       router.push("/dashboard");
     },
     onError: (error: any) => {
-      toast.error(error.message);
+      console.log(error);
+      errorHandler(error);
     },
   });
 

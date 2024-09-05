@@ -10,7 +10,7 @@
   import { PenBoxIcon, Trash2Icon, UserCog, UserIcon } from "lucide-vue-next";
   import { Button } from "../ui/button";
   import { useMutation, useQueryClient } from "@tanstack/vue-query";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import {
     Dialog,
     DialogHeader,
@@ -52,7 +52,7 @@
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.message);
+      errorHandler(error);
     },
   });
 
@@ -66,7 +66,7 @@
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.message);
+      errorHandler(error);
     },
   });
 

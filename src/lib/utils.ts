@@ -1,7 +1,8 @@
-import { AxiosRequestConfig, AxiosResponse } from "axios";
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
+import { toast } from "vue-sonner";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -79,3 +80,33 @@ export function jwtDecode(token: string) {
 
   return JSON.parse(jsonPayload);
 }
+
+export const errorHandler = (error: AxiosError) => {
+  if (error.response) {
+    const status = error.response.status;
+    switch (status) {
+      case 400:
+        toast.error("400: Bad Request");
+        break;
+      case 401:
+        toast.error("Unauthorized: Please check your credentials.");
+        break;
+      case 403:
+        toast.error("Forbidden: You don't have permission to access this.");
+        break;
+      case 404:
+        toast.error("Not Found: The requested resource could not be found.");
+        break;
+      case 500:
+        toast.error(
+          "Internal Server Error: Something went wrong on the server."
+        );
+        break;
+      default:
+        toast.error(`Error ${status}:  ${error.response.data}`);
+        break;
+    }
+  } else {
+    toast.error(`Failed! Something went wrong`);
+  }
+};

@@ -21,7 +21,7 @@
 
   import { Input } from "@/components/ui/input";
   import { Gender, TUser } from "@/type";
-  import { apiCall } from "@/lib/utils";
+  import { apiCall, errorHandler } from "@/lib/utils";
   import { useMutation, useQueryClient } from "@tanstack/vue-query";
   import { toast } from "vue-sonner";
   import { toTypedSchema } from "@vee-validate/zod";
@@ -88,7 +88,7 @@
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.message);
+      errorHandler(error);
     },
   });
 
@@ -101,7 +101,7 @@
     },
     onError: (error: any) => {
       console.log(error);
-      toast.error(error.message);
+      errorHandler(error);
     },
   });
 
