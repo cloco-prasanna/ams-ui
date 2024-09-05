@@ -1,10 +1,13 @@
 <script setup lang="ts">
   import { Toaster } from "./components/ui/sonner";
+  import { onMounted } from "vue";
+
+  onMounted(() => {
+    document.title = "Cloco Nepal | AMS";
+  });
 </script>
 
 <template>
-  <HelloWorld msg="Vite + Vue" />
-
   <main>
     <RouterView />
   </main>
