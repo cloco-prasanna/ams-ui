@@ -74,7 +74,7 @@
           <FormControl>
             <Input
               type="password"
-              placeholder="shadcn"
+              placeholder="Enter current password"
               v-bind="componentField"
             />
           </FormControl>
@@ -87,7 +87,7 @@
           <FormControl>
             <Input
               type="password"
-              placeholder="shadcn"
+              placeholder="Enter new password"
               v-bind="componentField"
             />
           </FormControl>
@@ -100,7 +100,7 @@
           <FormControl>
             <Input
               type="password"
-              placeholder="shadcn"
+              placeholder="Enter new password"
               v-bind="componentField"
             />
           </FormControl>

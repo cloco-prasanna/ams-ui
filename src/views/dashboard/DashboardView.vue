@@ -6,7 +6,7 @@
   import SimpleUserTable from "@/components/users/SimpleUserTable.vue";
   import { Button } from "@/components/ui/button";
   import { DonutChart } from "@/components/ui/chart-donut";
-  import { computed, watch } from "vue";
+  import { computed } from "vue";
   import { Card } from "@/components/ui/card";
 
   const { data: users } = useQuery({
