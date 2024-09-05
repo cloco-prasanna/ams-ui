@@ -67,7 +67,7 @@
       </DialogTrigger>
       <DialogContent class="sm:max-w-[700px]">
         <DialogHeader>
-          <DialogTitle>User Form</DialogTitle>
+          <DialogTitle>Create User Form</DialogTitle>
         </DialogHeader>
         <div class="w-full">
           <UserForm />
