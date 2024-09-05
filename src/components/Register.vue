@@ -81,9 +81,13 @@
         confirm_password: z.string({
           required_error: "Confirm Password is required",
         }),
-        phone: z.string().min(10, {
-          message: "Invalid phone number",
-        }),
+        phone: z.coerce
+          .number({
+            invalid_type_error: "Phone number must be a number.",
+          })
+          .min(1000000000, {
+            message: "Invalid phone number",
+          }),
         address: z.string().optional(),
         dob: z
           .string()
@@ -117,7 +121,6 @@
       last_name: "",
       email: "",
       password: "",
-      phone: "",
       address: "",
       confirm_password: "",
       gender: Gender.Other,

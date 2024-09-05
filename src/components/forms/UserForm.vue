@@ -58,10 +58,9 @@
         .number({
           invalid_type_error: "Phone number must be a number.",
         })
-        .min(10, {
+        .min(1000000000, {
           message: "Invalid phone number",
-        })
-        .optional(),
+        }),
 
       address: z
         .string({
