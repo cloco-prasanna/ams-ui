@@ -93,7 +93,7 @@
         </SelectContent>
       </Select>
       <Select v-model="sort_order">
-        <SelectTrigger class="w-[180px]">
+        <SelectTrigger class="w-[130px]">
           <SelectValue placeholder="Sort by" />
         </SelectTrigger>
         <SelectContent>

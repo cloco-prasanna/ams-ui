@@ -32,6 +32,7 @@
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import MusicForm from "../forms/MusicForm.vue";
   import { Card } from "@/components/ui/card";
+  import GenreLabel from "./GenreLabel.vue";
 
   import SkeletonRow from "../SkeletonRow.vue";
   const props = defineProps<{
@@ -81,7 +82,10 @@
           <TableCell>{{ music.id }}</TableCell>
           <TableCell>{{ music.title }}</TableCell>
           <TableCell>{{ music.album_name ?? "--" }}</TableCell>
-          <TableCell>{{ music.genre ?? "--" }}</TableCell>
+          <TableCell>
+            <GenreLabel v-if="music.genre" :genre="music.genre" />
+            <span v-else>--</span>
+          </TableCell>
 
           <TableCell class="text-right flex gap-2 justify-end">
             <Dialog>

@@ -43,7 +43,7 @@
             type="button"
             @click="toggleType"
           >
-            <EyeIcon v-if="inputType === 'text'" :size="20" />
+            <EyeIcon v-if="inputType === 'password'" :size="20" />
             <EyeOffIcon v-else :size="20" />
           </Button>
         </div>
