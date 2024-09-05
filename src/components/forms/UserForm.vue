@@ -82,8 +82,9 @@
       apiCall("patch", `/users/${id}`, { user: input }),
     onSuccess: (res) => {
       console.log(res);
-      toast.success("User Updated");
+      toast.success("User details Updated");
       queryClient.invalidateQueries({ queryKey: ["getUsers"] });
+      queryClient.invalidateQueries({ queryKey: ["getUser"] });
     },
     onError: (error: any) => {
       console.log(error);

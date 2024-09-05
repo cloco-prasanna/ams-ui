@@ -6,7 +6,7 @@
   import SimpleUserTable from "@/components/users/SimpleUserTable.vue";
   import { Button } from "@/components/ui/button";
   import { DonutChart } from "@/components/ui/chart-donut";
-  import { computed, watch } from "vue";
+  import { computed } from "vue";
   import { Card } from "@/components/ui/card";
 
   const { data: users } = useQuery({
@@ -46,7 +46,7 @@
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-10">
+  <div class="grid grid-cols-2 gap-4 sm:gap-10">
     <RouterLink
       to="/dashboard/users"
       class="px-8 py-6 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
@@ -72,8 +72,8 @@
       <MicVocalIcon :size="40" />
     </RouterLink>
   </div>
-  <div class="grid grid-cols-2 gap-10 mt-10">
-    <div class="border border-slate-200 rounded-lg">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-10 mt-10">
+    <div class="border border-slate-200 rounded-lg w-full">
       <div
         class="flex justify-between p-4 py-2 bg-secondary items-center text-sm"
       >
@@ -82,9 +82,7 @@
           ><RouterLink to="/dashboard/users"> View All</RouterLink></Button
         >
       </div>
-      <div class="">
-        <SimpleUserTable :users="users?.users" />
-      </div>
+      <SimpleUserTable :users="users?.users" />
     </div>
     <Card class="p-6 space-y-10">
       <div class="" v-if="donutData.length > 0">

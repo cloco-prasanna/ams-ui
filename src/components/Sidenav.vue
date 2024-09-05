@@ -7,6 +7,7 @@
     LogOut,
     LucideIcon,
     Mic2Icon,
+    SettingsIcon,
     UsersRound,
   } from "lucide-vue-next";
 
@@ -29,6 +30,11 @@
       href: "/dashboard/artists",
       icon: Mic2Icon,
     },
+    {
+      title: "Settings",
+      href: "/dashboard/settings",
+      icon: SettingsIcon,
+    },
   ];
 
   const router = useRouter();
@@ -40,8 +46,8 @@
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full">
-    <nav class="flex lg:flex-col">
+  <div class="flex flex-col justify-between h-full lg:min-h-[60vh]">
+    <nav class="flex lg:flex-col overflow-x-scroll sm:overflow-auto">
       <RouterLink to="/dashboard">
         <Button
           variant="ghost"

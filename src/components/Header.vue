@@ -16,7 +16,7 @@
 </script>
 
 <template>
-  <nav class="px-10 pt-10 max-w-[1400px] mx-auto">
+  <nav class="px-4 sm:px-10 pt-10 max-w-[1400px] mx-auto">
     <div class="flex items-center justify-between text-center">
       <RouterLink to="/">
         <img

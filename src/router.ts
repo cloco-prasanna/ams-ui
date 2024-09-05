@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "./views/HomeView.vue";
 import RegisterView from "./views/RegisterView.vue";
-import DashboardView from "./views/DashboardView.vue";
-import ArtistView from "./views/ArtistView.vue";
-import UserView from "./views/UserView.vue";
-import MusicView from "./views/MusicView.vue";
+import DashboardView from "./views/dashboard/DashboardView.vue";
+import ArtistView from "./views/dashboard/ArtistView.vue";
+import UserView from "./views/dashboard/UserView.vue";
+import MusicView from "./views/dashboard/MusicView.vue";
 import LayoutView from "./views/LayoutView.vue";
 import { useAuth } from "./hooks/useAuth";
+import SettingsView from "./views/dashboard/SettingsView.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -42,6 +43,10 @@ const router = createRouter({
             { path: "", component: ArtistView },
             { path: ":id", component: MusicView },
           ],
+        },
+        {
+          path: "settings",
+          component: SettingsView,
         },
       ],
     },

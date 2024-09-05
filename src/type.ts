@@ -12,6 +12,11 @@ export enum Genre {
   Jazz = "jazz",
 }
 
+export enum Role {
+  admin = "admin",
+  user = "user",
+}
+
 export type TUser = {
   id: number;
   email: string;
