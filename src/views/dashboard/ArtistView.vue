@@ -17,27 +17,38 @@
   import { FileDown, FileUp, Plus } from "lucide-vue-next";
   import { toast } from "vue-sonner";
   import { Input } from "@/components/ui/input";
+  // import {
+  //   Select,
+  //   SelectContent,
+  //   SelectGroup,
+  //   SelectItem,
+  //   SelectLabel,
+  //   SelectTrigger,
+  //   SelectValue,
+  // } from "@/components/ui/select";
 
   const page = ref(1);
 
   const per_page = ref(5);
 
   const search = ref("");
+  const order_by = ref("");
+  const sort_order = ref("");
 
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
   };
 
-  watch([search, per_page], () => {
+  watch([search, per_page, order_by, sort_order], () => {
     page.value = 1;
   });
 
   const { data } = useQuery({
-    queryKey: ["getArtists", page, per_page, search],
+    queryKey: ["getArtists", page, per_page, search, sort_order, order_by],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/artists?search=${search.value}&page=${page.value}&per_page=${per_page.value}`
+        `/artists?search=${search.value}&order_by=${order_by.value}&sort_order=${sort_order.value}&page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TArtistResponse;
     },
@@ -87,6 +98,32 @@
       <div class="">
         <Input type="text" placeholder="Search" v-model="search" />
       </div>
+      <!-- <Select v-model="order_by">
+        <SelectTrigger class="w-[180px]">
+          <SelectValue placeholder="Order by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Order by</SelectLabel>
+            <SelectItem value="first_name">Firstname</SelectItem>
+            <SelectItem value="last_name">Lastname </SelectItem>
+            <SelectItem value="email">Email </SelectItem>
+            <SelectItem value="created_at">Created At </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <Select v-model="sort_order">
+        <SelectTrigger class="w-[130px]">
+          <SelectValue placeholder="Sort by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Sort by</SelectLabel>
+            <SelectItem value="asc"> Asc </SelectItem>
+            <SelectItem value="desc"> Desc </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select> -->
       <Button class="flex gap-2" @click="handleCSVExport" variant="secondary">
         <FileDown :size="20" /> Export
       </Button>

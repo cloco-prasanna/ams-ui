@@ -39,20 +39,32 @@
 
   const genre = ref("");
 
+  const order_by = ref("");
+  const sort_order = ref("");
+
   const handleUpdatePerPage = (value: number) => {
     per_page.value = value;
   };
 
-  watch([search, genre, per_page], () => {
+  watch([search, genre, per_page, order_by, sort_order], () => {
     page.value = 1;
   });
 
   const { data } = useQuery({
-    queryKey: ["getMusics", page, per_page, artist_id, search, genre],
+    queryKey: [
+      "getMusics",
+      page,
+      per_page,
+      artist_id,
+      search,
+      genre,
+      sort_order,
+      order_by,
+    ],
     queryFn: async () => {
       const response = await apiCall(
         "get",
-        `/artists/${artist_id}dsf/musics?search=${search.value}&genre=${genre.value}&page=${page.value}&per_page=${per_page.value}`
+        `/artists/${artist_id}dsf/musics?search=${search.value}&genre=${genre.value}&order_by=${order_by.value}&sort_order=${sort_order.value}&page=${page.value}&per_page=${per_page.value}`
       );
       return response.data as TMusicResponse;
     },
@@ -108,6 +120,32 @@
           </SelectGroup>
         </SelectContent>
       </Select>
+      <!-- <Select v-model="order_by">
+        <SelectTrigger class="w-[180px]">
+          <SelectValue placeholder="Order by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Order by</SelectLabel>
+            <SelectItem value="title">Title</SelectItem>
+            <SelectItem value="album_name">Album Name</SelectItem>
+            <SelectItem value="genre">Genre </SelectItem>
+            <SelectItem value="created_at">Created At </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+      <Select v-model="sort_order">
+        <SelectTrigger class="w-[130px]">
+          <SelectValue placeholder="Sort by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Sort by</SelectLabel>
+            <SelectItem value="asc"> Asc </SelectItem>
+            <SelectItem value="desc"> Desc </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select> -->
     </div>
   </div>
   <MusicTable :musics="data?.musics || []" :artist_id="artist_id" />
