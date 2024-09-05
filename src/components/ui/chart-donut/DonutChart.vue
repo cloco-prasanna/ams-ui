@@ -102,7 +102,7 @@
         :value="(d: Data) => d[category]"
         :sort-function="sortFunction"
         :color="colors"
-        :arc-width="type === 'donut' ? 30 : 0"
+        :arc-width="type === 'donut' ? 35 : 0"
         :show-background="false"
         :central-label="type === 'donut' ? valueFormatter(totalValue) : ''"
         :events="{

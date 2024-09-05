@@ -42,18 +42,18 @@
     );
   });
 
-  const colors = ["brown", "orange", "yellow", "teal", "pink"];
+  const colors = ["brown", "orange", "#d9cb32", "teal", "#3d3b5e"];
 </script>
 
 <template>
   <div class="grid grid-cols-2 gap-4 sm:gap-10">
     <RouterLink
       to="/dashboard/users"
-      class="px-8 py-6 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+      class="sm:px-8 sm:py-6 px-4 py-3 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
     >
       <div class="space-y-2">
         <p class="font-medium">Users</p>
-        <p class="text-4xl font-bold">
+        <p class="sm:text-4xl text-3xl font-bold">
           {{ users?.totalCount }}
         </p>
       </div>
@@ -61,11 +61,11 @@
     </RouterLink>
     <RouterLink
       to="/dashboard/artists"
-      class="px-8 py-6 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+      class="sm:px-8 sm:py-6 px-4 py-3 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
     >
       <div class="space-y-2">
         <p class="font-medium">Artists</p>
-        <p class="text-4xl font-bold">
+        <p class="sm:text-4xl text-3xl font-bold">
           {{ artists?.totalCount }}
         </p>
       </div>
@@ -85,16 +85,16 @@
       <SimpleUserTable :users="users?.users" />
     </div>
     <Card class="p-6 space-y-10">
+      <h4 class="font-semibold text-center text-xl">Musics by Genre</h4>
       <div class="" v-if="donutData.length > 0">
         <DonutChart
           index="name"
           :category="'count'"
           :data="donutData"
-          :colors="['brown', 'orange', 'yellow', 'teal', 'pink']"
+          :colors="colors"
         />
       </div>
       <div class="mt-4 space-y-2">
-        <p class="font-semibold text-center">Musics by Genre</p>
         <ul class="space-y-1 flex gap-4 flex-wrap">
           <li
             v-for="(genre, index) in donutData"

@@ -46,8 +46,10 @@
 </script>
 
 <template>
-  <div class="flex flex-col justify-between h-full lg:min-h-[60vh]">
-    <nav class="flex lg:flex-col overflow-x-scroll sm:overflow-auto">
+  <div
+    class="flex lg:flex-col justify-between h-full lg:min-h-[60vh] overflow-x-scroll sm:overflow-auto"
+  >
+    <nav class="flex lg:flex-col">
       <RouterLink to="/dashboard">
         <Button
           variant="ghost"
@@ -85,11 +87,11 @@
     </nav>
     <div class="flex-1"></div>
     <Button
-      class="flex items-start gap-4"
+      class="items-start gap-4 flex"
       variant="outline"
       @click="handleLogout"
     >
-      <LogOut :size="20" /> Logout
+      <LogOut :size="20" /> <span class="lg:block hidden">Logout</span>
     </Button>
   </div>
 </template>
