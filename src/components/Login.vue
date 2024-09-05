@@ -89,7 +89,15 @@
 
       <InputPassword name="password" label="Password" />
 
-      <Button type="submit" class="w-full">Login</Button>
+      <div class="flex justify-between gap-2">
+        <p>
+          Not Registered?
+          <RouterLink to="/register" class="underline hover:text-orange-800"
+            >Create an account</RouterLink
+          >
+        </p>
+        <Button type="submit"> Login </Button>
+      </div>
     </form>
   </div>
 </template>

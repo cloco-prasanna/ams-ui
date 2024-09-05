@@ -6,7 +6,13 @@
   import { useRouter } from "vue-router";
   import { toast } from "vue-sonner";
   import * as z from "zod";
-
+  import {
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form";
   import {
     Select,
     SelectContent,
@@ -83,10 +89,9 @@
           .refine((v) => v, { message: "A date of birth is required." }),
         gender: z.enum(["male", "female", "other"]).optional(),
       })
-      // Refinement to ensure password and confirm_password match
       .refine((data) => data.password === data.confirm_password, {
         message: "Passwords do not match",
-        path: ["confirm_password"], // this will trigger an error on the confirm_password componentField
+        path: ["confirm_password"],
       })
   );
 
