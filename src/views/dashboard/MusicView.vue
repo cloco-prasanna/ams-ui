@@ -50,7 +50,7 @@
     page.value = 1;
   });
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [
       "getMusics",
       page,
@@ -148,7 +148,11 @@
       </Select> -->
     </div>
   </div>
-  <MusicTable :musics="data?.musics || []" :artist_id="artist_id" />
+  <MusicTable
+    :musics="data?.musics || []"
+    :artist_id="artist_id"
+    :isLoading="isLoading"
+  />
   <Pagination
     v-if="data"
     :current_page="page"

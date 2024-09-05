@@ -38,9 +38,11 @@
   import UserForm from "../forms/UserForm.vue";
   import { Role, TUser } from "@/type";
   import { toast } from "vue-sonner";
+  import SkeletonRow from "../SkeletonRow.vue";
 
   const props = defineProps<{
     users?: TUser[];
+    isLoading?: boolean;
   }>();
   const queryClient = useQueryClient();
   const deleteUserMn = useMutation({
@@ -101,7 +103,12 @@
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow v-if="props.users" v-for="user in props.users" :key="user.id">
+        <SkeletonRow v-if="props.isLoading" :columns="9" />
+        <TableRow
+          v-if="!props.isLoading && props.users"
+          v-for="user in props.users"
+          :key="user.id"
+        >
           <TableCell>{{ user.id }}</TableCell>
           <TableCell
             >{{ user.first_name ?? "--" }}

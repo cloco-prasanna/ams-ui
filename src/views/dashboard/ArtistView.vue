@@ -43,7 +43,7 @@
     page.value = 1;
   });
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getArtists", page, per_page, search, sort_order, order_by],
     queryFn: async () => {
       const response = await apiCall(
@@ -140,7 +140,7 @@
       />
     </div>
   </div>
-  <artistTable :artists="data?.artists || []" />
+  <artistTable :artists="data?.artists || []" :isLoading="isLoading" />
   <Pagination
     v-if="data"
     :current_page="page"

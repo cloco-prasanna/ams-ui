@@ -42,7 +42,7 @@
     page.value = 1;
   });
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["getUsers", page, per_page, search, sort_order, order_by],
     queryFn: async () => {
       const response = await apiCall(
@@ -106,7 +106,7 @@
       </Select>
     </div>
   </div>
-  <UserTable :users="data?.users || []" />
+  <UserTable :users="data?.users || []" :isLoading="isLoading" />
   <Pagination
     v-if="data"
     :current_page="page"

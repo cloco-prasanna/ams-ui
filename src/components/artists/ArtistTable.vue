@@ -31,8 +31,10 @@
   import { apiCall, errorHandler } from "@/lib/utils";
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import ArtistForm from "../forms/ArtistForm.vue";
+  import SkeletonRow from "../SkeletonRow.vue";
   const props = defineProps<{
     artists?: TArtist[];
+    isLoading?: boolean;
   }>();
 
   const queryClient = useQueryClient();
@@ -68,8 +70,10 @@
         </TableRow>
       </TableHeader>
       <TableBody>
+        <SkeletonRow v-if="props.isLoading" :columns="8" />
+
         <TableRow
-          v-if="props.artists?.length"
+          v-if="!props.isLoading && props.artists?.length"
           v-for="artist in props.artists"
           :key="artist.id"
         >
