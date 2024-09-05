@@ -39,6 +39,7 @@
   import { Role, TUser } from "@/type";
   import { toast } from "vue-sonner";
   import SkeletonRow from "../SkeletonRow.vue";
+  import { Card } from "@/components/ui/card";
 
   const props = defineProps<{
     users?: TUser[];
@@ -85,7 +86,7 @@
 </script>
 
 <template>
-  <div class="p-2 border border-slate-200 rounded-lg">
+  <Card class="p-2 rounded-lg">
     <Table>
       <TableHeader>
         <TableRow>
@@ -201,5 +202,5 @@
         </TableRow>
       </TableBody>
     </Table>
-  </div>
+  </Card>
 </template>

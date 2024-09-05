@@ -47,33 +47,35 @@
 
 <template>
   <div class="grid grid-cols-2 gap-4 sm:gap-10">
-    <RouterLink
-      to="/dashboard/users"
-      class="sm:px-8 sm:py-6 px-4 py-3 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
-    >
-      <div class="space-y-2">
-        <p class="font-medium">Users</p>
-        <p class="sm:text-4xl text-3xl font-bold">
-          {{ users?.totalCount }}
-        </p>
-      </div>
-      <UsersRoundIcon :size="40" />
+    <RouterLink to="/dashboard/users">
+      <Card
+        class="px-8 py-6 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+      >
+        <div class="space-y-2">
+          <p class="font-medium">Users</p>
+          <p class="sm:text-4xl text-3xl font-bold">
+            {{ users?.totalCount }}
+          </p>
+        </div>
+        <UsersRoundIcon :size="40"
+      /></Card>
     </RouterLink>
-    <RouterLink
-      to="/dashboard/artists"
-      class="sm:px-8 sm:py-6 px-4 py-3 border border-slate-300 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
-    >
-      <div class="space-y-2">
-        <p class="font-medium">Artists</p>
-        <p class="sm:text-4xl text-3xl font-bold">
-          {{ artists?.totalCount }}
-        </p>
-      </div>
-      <MicVocalIcon :size="40" />
+    <RouterLink to="/dashboard/artists">
+      <Card
+        class="px-8 py-6 rounded-lg items-center flex gap-4 justify-between hover:shadow-lg transition-all"
+      >
+        <div class="space-y-2">
+          <p class="font-medium">Artists</p>
+          <p class="sm:text-4xl text-3xl font-bold">
+            {{ artists?.totalCount }}
+          </p>
+        </div>
+        <MicVocalIcon :size="40" />
+      </Card>
     </RouterLink>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-10 mt-10">
-    <div class="border border-slate-200 rounded-lg w-full">
+    <Card class="rounded-lg w-full">
       <div
         class="flex justify-between p-4 py-2 bg-secondary items-center text-sm"
       >
@@ -83,7 +85,7 @@
         >
       </div>
       <SimpleUserTable :users="users?.users" />
-    </div>
+    </Card>
     <Card class="p-6 space-y-10">
       <h4 class="font-semibold text-center text-xl">Musics by Genre</h4>
       <div class="" v-if="donutData.length > 0">

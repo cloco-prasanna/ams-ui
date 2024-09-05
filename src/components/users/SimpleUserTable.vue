@@ -20,8 +20,7 @@
       <TableHeader>
         <TableRow>
           <TableHead class="w-[100px]"> Id </TableHead>
-          <TableHead>Firstname</TableHead>
-          <TableHead>Lastname</TableHead>
+          <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Date</TableHead>
         </TableRow>
@@ -29,8 +28,10 @@
       <TableBody>
         <TableRow v-if="props.users" v-for="user in props.users" :key="user.id">
           <TableCell>{{ user.id }}</TableCell>
-          <TableCell>{{ user.first_name ?? "--" }}</TableCell>
-          <TableCell>{{ user.last_name ?? "--" }}</TableCell>
+          <TableCell
+            >{{ user.first_name ?? "--" }}
+            {{ user.last_name ?? "--" }}</TableCell
+          >
           <TableCell>{{ user.email }}</TableCell>
           <TableCell>{{
             user.created_at

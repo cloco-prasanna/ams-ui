@@ -42,6 +42,7 @@
     PopoverTrigger,
   } from "@/components/ui/popover";
   import InputPassword from "./forms/InputPassword.vue";
+  import { Card } from "@/components/ui/card";
 
   const df = new DateFormatter("en-US", {
     dateStyle: "long",
@@ -134,9 +135,7 @@
 </script>
 
 <template>
-  <div
-    class="mx-auto max-w-[700px] my-10 p-4 rounded-lg border border-gray-300"
-  >
+  <Card class="mx-auto max-w-[700px] my-10 p-4 rounded-lg">
     <h1 class="text-lg font-bold flex justify-between mb-4">
       <span>User Registration</span> <span>Cloco AMS</span>
     </h1>
@@ -298,5 +297,5 @@
         <Button type="submit">Submit</Button>
       </div>
     </form>
-  </div>
+  </Card>
 </template>

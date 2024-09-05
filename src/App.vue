@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <main>
+  <main class="">
     <RouterView />
   </main>
   <Toaster richColors />

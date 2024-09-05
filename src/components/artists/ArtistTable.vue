@@ -32,6 +32,7 @@
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import ArtistForm from "../forms/ArtistForm.vue";
   import SkeletonRow from "../SkeletonRow.vue";
+  import { Card } from "@/components/ui/card";
   const props = defineProps<{
     artists?: TArtist[];
     isLoading?: boolean;
@@ -55,7 +56,7 @@
 </script>
 
 <template>
-  <div class="p-2 border border-slate-200 rounded-lg">
+  <Card class="p-2 rounded-lg">
     <Table>
       <TableHeader>
         <TableRow>
@@ -140,5 +141,5 @@
         </TableRow>
       </TableBody>
     </Table>
-  </div>
+  </Card>
 </template>

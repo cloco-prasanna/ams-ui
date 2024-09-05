@@ -31,6 +31,7 @@
   import { apiCall, errorHandler } from "@/lib/utils";
   import { useQueryClient, useMutation } from "@tanstack/vue-query";
   import MusicForm from "../forms/MusicForm.vue";
+  import { Card } from "@/components/ui/card";
 
   import SkeletonRow from "../SkeletonRow.vue";
   const props = defineProps<{
@@ -58,7 +59,7 @@
 </script>
 
 <template>
-  <div class="p-2 border border-slate-200 rounded-lg">
+  <Card class="p-2 rounded-lg">
     <Table>
       <TableHeader>
         <TableRow>
@@ -130,5 +131,5 @@
         </TableRow>
       </TableBody>
     </Table>
-  </div>
+  </Card>
 </template>

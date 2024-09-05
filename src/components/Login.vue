@@ -17,6 +17,7 @@
   import { Input } from "@/components/ui/input";
   import InputPassword from "./forms/InputPassword.vue";
   import Button from "./ui/button/Button.vue";
+  import { Card } from "@/components/ui/card";
 
   const schema = toTypedSchema(
     z.object({
@@ -66,9 +67,7 @@
 </script>
 
 <template>
-  <div
-    class="mx-auto max-w-[500px] my-10 p-4 rounded-lg border border-gray-300"
-  >
+  <Card class="mx-auto max-w-[500px] my-10 p-4 rounded-lg">
     <h1 class="text-lg font-bold">Login to Cloco AMS</h1>
     <Separator class="my-4" />
 
@@ -99,5 +98,5 @@
         <Button type="submit"> Login </Button>
       </div>
     </form>
-  </div>
+  </Card>
 </template>
