@@ -2,6 +2,4 @@
 
 # Artist Management System
 # Technology Used
-- shadcn-vue
-- tailwindCSS
-- nextjs
+
